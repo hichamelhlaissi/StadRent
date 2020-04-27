@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {SocialIcon} from "react-native-elements";
 import Register from "./src/Authentification/Register";
 import {IsOrderValid,IsOrderDone} from "./src/screens/Orders/RequestRoute";
+import {strings} from './src/translations/translate';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
@@ -197,7 +198,7 @@ export default class App extends React.Component{
                                 style={styles.input}
                                 value={this.state.email}
                                 maxLength={55}
-                                placeholder="Email address"
+                                placeholder={strings('loginPage.emailAddress')}
                                 underlineColorAndroid = "transparent"
                                 placeholderTextColor = "#a9a9a1"
                                 autoCapitalize = "none"
@@ -211,7 +212,7 @@ export default class App extends React.Component{
                                 value={this.state.password}
                                 maxLength={22}
                                 secureTextEntry={this.state.secureTextEntryFirst}
-                                placeholder="Password"
+                                placeholder={strings('loginPage.password')}
                                 underlineColorAndroid = "transparent"
                                 placeholderTextColor = "#a9a9a1"
                                 autoCapitalize = "none"
@@ -222,15 +223,15 @@ export default class App extends React.Component{
                     </View>
                     <View style={styles.loginAndRegister}>
                         <TouchableOpacity style={styles.buttonSubmit} onPress={() => this.loginUser(this.state.email, this.state.password)}>
-                            <Text style={styles.buttonSubmitText}>Login</Text>
+                            <Text style={styles.buttonSubmitText}>{strings('loginPage.login')}</Text>
                         </TouchableOpacity >
                         <Text style={styles.registerHere} onPress={() => {
                             this.setModalVisible(true);
-                        }}>Register here</Text>
+                        }}>{strings('loginPage.registerHere')}</Text>
                     </View>
                     <View style={styles.lineContent}>
                         <View style={styles.line}/>
-                        <Text style={styles.orText}>Or</Text>
+                        <Text style={styles.orText}>{strings('loginPage.or')}</Text>
                         <View style={styles.line}/>
                     </View>
                     <View style={styles.socialButtonsContainer}>
@@ -251,7 +252,7 @@ export default class App extends React.Component{
                         />
                     </View>
                     <View style={styles.footerContainer}>
-                        <Text style={{textDecorationLine: 'underline'}} onPress={() => Alert.alert("Action")}>Terms & Conditions</Text>
+                        <Text style={{textDecorationLine: 'underline'}} onPress={() => Alert.alert("Action")}>{strings('loginPage.termsAndConditions')}</Text>
                     </View>
                 </View>
             );

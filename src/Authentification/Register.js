@@ -20,7 +20,7 @@ import {auth, db} from '../services/FireBaseConfig'
 import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import { Formik } from 'formik';
 import * as yup from 'yup';
-
+import {strings} from '../../src/translations/translate';
 
 export default class Register extends React.Component{
     constructor(props){
@@ -113,7 +113,7 @@ export default class Register extends React.Component{
                             value={props.values.username}
                             onBlur={props.handleBlur('username')}
                             style={styles.input}
-                            placeholder="Username"
+                            placeholder={strings('registerPage.username')}
                             underlineColorAndroid = "transparent"
                             placeholderTextColor = "#a9a9a1"
                             autoCapitalize = "none"
@@ -127,7 +127,7 @@ export default class Register extends React.Component{
                             value={props.values.email}
                             onBlur={props.handleBlur('email')}
                             style={styles.input}
-                            placeholder="Email address"
+                            placeholder={strings('registerPage.emailAddress')}
                             underlineColorAndroid = "transparent"
                             placeholderTextColor = "#a9a9a1"
                             autoCapitalize = "none"
@@ -144,7 +144,7 @@ export default class Register extends React.Component{
                             onBlur={props.handleBlur('password')}
                             style={styles.input}
                             secureTextEntry={this.state.secureTextEntryFirst}
-                            placeholder="Password"
+                            placeholder={strings('registerPage.password')}
                             underlineColorAndroid = "transparent"
                             placeholderTextColor = "#a9a9a1"
                             autoCapitalize = "none"
@@ -161,7 +161,7 @@ export default class Register extends React.Component{
                             onBlur={props.handleBlur('repeatpassword')}
                             style={styles.input}
                             secureTextEntry={this.state.secureTextEntrySecond}
-                            placeholder="Repeat Password"
+                            placeholder={strings('registerPage.repeatPassword')}
                             underlineColorAndroid = "transparent"
                             placeholderTextColor = "#a9a9a1"
                             autoCapitalize = "none"
@@ -174,23 +174,23 @@ export default class Register extends React.Component{
                         <Picker style={styles.inputPicker}
                             selectedValue={props.values.userType}
                             onValueChange={props.handleChange('userType')}>
-                            <Picker.Item label="Normal User" value="userNormal" />
-                            <Picker.Item label="Staduim responsible" value="userResponsible" />
+                            <Picker.Item label={strings('registerPage.normalUser')} value="userNormal" />
+                            <Picker.Item label={strings('registerPage.stadiumResponsible')} value="userResponsible" />
                         </Picker>
 
                     </View>
                 <View style={styles.loginAndRegister}>
                     <TouchableOpacity style={styles.buttonSubmit} onPress={props.handleSubmit}>
-                        <Text style={styles.buttonSubmitText}>Register</Text>
+                        <Text style={styles.buttonSubmitText}>{strings('registerPage.register')}</Text>
                     </TouchableOpacity >
-                    <Text style={styles.registerHere} onPress={() => this.props.CloseModal()}>Sign in here</Text>
+                    <Text style={styles.registerHere} onPress={() => this.props.CloseModal()}>{strings('registerPage.signInHere')}</Text>
                 </View>
                 </View>
                     )}
                 </Formik>
                 <View style={styles.lineContent}>
                     <View style={styles.line}/>
-                    <Text style={styles.orText}>Or</Text>
+                    <Text style={styles.orText}>{strings('registerPage.or')}</Text>
                     <View style={styles.line}/>
                 </View>
                 <View style={styles.socialButtonsContainer}>
@@ -210,7 +210,7 @@ export default class Register extends React.Component{
                     />
                 </View>
                 <View style={styles.footerContainer}>
-                    <Text style={{textDecorationLine: 'underline'}} onPress={() => Alert.alert("Action")}>Terms & Conditions</Text>
+                    <Text style={{textDecorationLine: 'underline'}} onPress={() => Alert.alert("Action")}>{strings('registerPage.termsAndConditions')}</Text>
                 </View>
             </View>
         );

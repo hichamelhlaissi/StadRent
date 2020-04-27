@@ -1,0 +1,22 @@
+{
+  "loginPage": {
+    "emailAddress": "Email address",
+    "password": "Password",
+    "login": "Login",
+    "registerHere": "Register here",
+    "or": "Or",
+    "termsAndConditions": "Terms & Conditions"
+  },
+  "registerPage": {
+    "username": "Username",
+    "emailAddress": "Email address",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "normalUser": "Normal User",
+    "stadiumResponsible": "Stadium responsible",
+    "register": "Register",
+    "signInHere": "Sign in here",
+    "or": "Or",
+    "termsAndConditions": "Terms & Conditions"
+  }
+}
