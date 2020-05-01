@@ -6,6 +6,7 @@ import HistoryRoute from "./HistoryRoute";
 import RequestRoute, {IsOrderValid} from "./RequestRoute";
 import ScheduledRoute from "./ScheduledRoute";
 import {db} from "../../services/FireBaseConfig";
+import {strings} from "../../translations/translate";
 
 const initialLayout = {
     height: 0,
@@ -20,9 +21,9 @@ export default class Orders extends React.Component {
             index: 0,
             isLoading:true,
             routes: [
-                { key: 'history', title: 'History' },
-                { key: 'scheduled', title: 'Scheduled' },
-                { key: 'request', title: 'Request' },
+                { key: 'history', title: strings('ordersUserPages.history') },
+                { key: 'scheduled', title: strings('ordersUserPages.scheduled') },
+                { key: 'request', title: strings('ordersUserPages.request') },
             ],
         };
     }

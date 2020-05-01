@@ -1,13 +1,16 @@
 {
   "loginPage": {
+    "pageTitle": "Login",
     "emailAddress": "Email address",
     "password": "Password",
     "login": "Login",
     "registerHere": "Register here",
     "or": "Or",
-    "termsAndConditions": "Terms & Conditions"
+    "termsAndConditions": "Terms & Conditions",
+    "myStaduims": "My Staduims"
   },
   "registerPage": {
+    "pageTitle": "Register",
     "username": "Username",
     "emailAddress": "Email address",
     "password": "Password",
@@ -18,5 +21,215 @@
     "signInHere": "Sign in here",
     "or": "Or",
     "termsAndConditions": "Terms & Conditions"
+  },
+  "homePage": {
+    "pageTitle": "Home",
+    "staduimList": "Stadium List",
+    "errorPlatform": "Oops, this will not work on Sketch in an Android emulator. Try it on your device!",
+    "alertMessage": "Alert Message",
+    "allowLocation": "Allow Location",
+    "openSetting": "Open Settings",
+    "cancel": "Cancel",
+    "address": "Address :",
+    "phoneNumber": "Phone Number :",
+    "city": "City :",
+    "lastFeedback": "Last Feedback :",
+    "feedbackText": "Nice",
+    "confirm": "Confirm",
+    "listMode": "List Mode",
+    "enterCity": "Enter city here",
+    "noCItyStaduim": "Your City Have No Stadiums"
+  },
+  "chooseHourPage": {
+    "pageTitle": "Choose Hour",
+    "chooseDayButton": "Choose The Day",
+    "reserve": "Reserve",
+    "reserved": "Reserved",
+    "empty": "Empty"
+  },
+  "orderSummaryPage": {
+    "pageTitle": "Order Summary",
+    "details": "Details",
+    "change": "Change",
+    "confirm": "CONFIRM"
+  },
+  "ordersUserPages": {
+    "pageTitle": "Orders",
+    "history": "History",
+    "scheduled": "Scheduled",
+    "request": "Request",
+    "cancellationMessage": "cancellation Message sent successfully!!",
+    "yourMessage": "Your cancellation message is: ",
+    "error": "Error!!",
+    "emptyMessage": "Your cancellation message is empty",
+    "exist": "Already Exist",
+    "showOnMap": "Show on map",
+    "addFavorite": "Add to favorite",
+    "report": "Report",
+    "cancel": "Cancel",
+    "emptyOrders": "Request orders is empty",
+    "reportEmpty": "Your report message is empty",
+    "cancelReason": "Enter your cancellation reason",
+    "send": "SEND",
+    "reportReason": "Enter your report reason",
+    "systemOverTime": "System : Over Time",
+    "systemDelivered": "System : Delivered"
+  },
+  "favoriteStadiumsPage": {
+    "pageTitle": "Favorite Stadiums"
+  },
+  "subscriptionPage": {
+    "pageTitle": "Subscription",
+    "error": "Error!!",
+    "userDecision": "(Decision By User) ",
+    "yourMessage": "Your cancellation message is: ",
+    "subscriptionCanceled": "Your subscription already Canceled",
+    "address": "Address :",
+    "staduimName": "Stadium Name :",
+    "time": "Time :",
+    "payment": "Payment :",
+    "status": "Status :",
+    "message": "Message",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "send": "SEND",
+    "addNewOne": "Add new subscription",
+    "emptySubscription": "Request subscription is empty",
+    "cancelReason": "Enter your cancellation reason",
+    "chooseStaduim": "Choose a stadium"
+  },
+  "chooseTimePage": {
+    "pageTitle": "Choose Time",
+    "error": "Error!!",
+    "errorMessage": "Please enter all information",
+    "subscriptionName": "Subscription name",
+    "Monday": "Monday",
+    "Tuesday":"Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday":"Thursday",
+    "Friday": "Friday",
+    "Saturday":"Saturday",
+    "Sunday": "Sunday",
+    "selectDay": "Select a day",
+    "selectHour": "Select an hour",
+    "Weekly": "Weekly",
+    "Monthly": "Monthly",
+    "paymentType": "Select payment type",
+    "address": "Address :",
+    "phoneNumber": "Phone Number :",
+    "city": "City :",
+    "lastFeedback": "Last Feedback :",
+    "sendRequest": "Send request"
+  },
+  "profilePage": {
+    "pageTitle": "Profile",
+    "confirm": "Confirm",
+    "emailVerification": "Email verification is required to make an order",
+    "firstNameCheck": "First name is required to make an order",
+    "lastNameCheck": "Last name is required to make an order",
+    "phoneNumberCheck": "Phone number is required to make an order",
+    "passwordCheck": "Password not match",
+    "isNumberValid": "Phone number most be 10 numbers",
+    "spaceNotAllowed": "Space not allowed",
+    "newPassword": "New Password",
+    "repeatPassword": "Repeat New Password",
+    "updatePasswordButton": "Change Password",
+    "cancelPasswordButton": "Cancel",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "email": "Email",
+    "gender": "Gender",
+    "birthDay": "Birth Day",
+    "city": "City",
+    "language": "Language",
+    "submit": "Submit"
+  },
+  "aboutPage": {
+    "pageTitle": "About",
+    "Text": "We Are Stadium Rent"
+  },
+  "drawerUserPage": {
+    "signOut": "Sign out",
+    "error": "Error!!"
+  },
+  "schedule": {
+    "history": "History",
+    "scheduled": "Scheduled",
+    "request": "Request"
+  },
+  "historyRoute": {
+    "report": "Report",
+    "cancel": "Cancel",
+    "send": "Send",
+    "empty": "Orders history is empty",
+    "reasonLabel": "Enter your report reason"
+  },
+  "scheduleRoute": {
+    "cancel": "Cancel",
+    "send": "Send",
+    "empty": "Orders schedule is empty",
+    "reasonLabel": "Enter your cancellation reason"
+  },
+  "requestRoute": {
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "send": "Send",
+    "empty": "Orders request is empty",
+    "reasonLabel": "Enter your cancellation reason"
+  },
+  "myStadiums": {
+    "responsible": "Responsible : ",
+    "address": "Address : ",
+    "phoneNumber": "Phone number : ",
+    "payment": "Payment : ",
+    "status": "Status : ",
+    "add": "Add schedule to the next week",
+    "reserve": "Reserve for someone",
+    "empty": "You have no stadium to see",
+    "addNewStadium": "Add new stadium"
+  },
+  "reserveToSomeone": {
+    "choose": "Choose the day",
+    "finish": "Finish",
+    "reserve": "Reserve",
+    "reserved": "Reserved",
+    "dataSent": "Data sent successfully"
+  },
+  "addScheduleToTheNextWeek": {
+    "choose": "Choose the day",
+    "finish": "Finish",
+    "reserve": "Reserve",
+    "reserved": "Reserved",
+    "dataSent": "Data sent successfully"
+  },
+  "addNewStadium": {
+    "stadiumName": "Stadium name",
+    "responsibleName": "Responsible name",
+    "phoneNumber": "Phone number",
+    "stadiumCity": "Stadium city",
+    "stadiumAddress": "Stadium address",
+    "documents": "Documents (max: 5)",
+    "goChoose": "Go choose",
+    "imageName": "Image name",
+    "noDocuments": "No documents uploaded",
+    "description": "Description",
+    "descriptionLabel": "Any notes? add them here please",
+    "accept": "I accept all ",
+    "termsAndConditions": "Terms & Conditions",
+    "done": "Done",
+    "error1": "Please fill the required fields.. All the fields are required except: description",
+    "error2": "Please accept our terms and conditions to continue",
+    "error3": "Maximum of documents to add is 5..",
+    "error4": "Please give the image a name before uploading it..",
+    "error5": "Please enter numbers only",
+    "enterCity": "Enter city here",
+    "cancel": "Cancel"
+  },
+  "stadiumLocation": {
+    "stadiumLocation": "Stadium location",
+    "next": "Next",
+    "chooseLocationFirst": "Choose the location first"
   }
 }

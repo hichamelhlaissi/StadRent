@@ -16,6 +16,7 @@ import {auth, db} from "../../services/FireBaseConfig";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import ModalWrapper from "react-native-modal-wrapper";
+import {strings} from '../../translations/translate';
 
 export default class Subscriptions extends React.Component {
 
@@ -66,7 +67,7 @@ export default class Subscriptions extends React.Component {
 
         }, function (error) {
             if (error) {
-                Alert.alert('Error!!', error.message)
+                Alert.alert(strings('subscriptionPage.error'), error.message)
             } else {
                 console.log('success');
             }
@@ -87,10 +88,10 @@ export default class Subscriptions extends React.Component {
             setTimeout(function () {
                 db.ref("/subscription/"+IdSubscription).update({
                     Status: 'Canceled',
-                    Message: '(Decision By User) '+message,
+                    Message: strings('subscriptionPage.userDecision')+message,
                 }, function (error) {
                     if (error) {
-                        Alert.alert('Error', error)
+                        Alert.alert(strings('subscriptionPage.error'), error.message)
                     } else {
                         console.log('success');
                     }
@@ -101,10 +102,10 @@ export default class Subscriptions extends React.Component {
           const fresh=()=> this.getSubscription();
         }else {
             if (message.length < 0){
-                Alert.alert('Error!!','Your cancellation message is empty');
+                Alert.alert(strings('subscriptionPage.error'), strings('subscriptionPage.yourMessage'))
             }
             if (Status === "Canceled"){
-                Alert.alert('Error!!','Your subscription already Canceled');
+                Alert.alert(strings('subscriptionPage.error'), strings('subscriptionPage.subscriptionCanceled'))
             }
         }
     };
@@ -115,21 +116,21 @@ export default class Subscriptions extends React.Component {
                 <View>
                     <Text style={styles.subscriptionName}><Icon name="vinyl" size={22} color="#5780D9" /> {subscriptionName}</Text>
                     <View style={styles.infos}>
-                        <Text>Address : <Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
-                        <Text>Staduim Name : <Text style={{color: '#9b9b9b'}}>{stadiumName}</Text></Text>
-                        <Text>Time : <Text style={{color: '#9b9b9b'}}>{Day} ({Hour})</Text></Text>
-                        <Text>Payment : <Text style={{color: '#9b9b9b'}}>{payment}</Text></Text>
-                        <Text>Status : <Text style={{color: 'green'}}>{Status}</Text><Text>  Message :</Text><Text> {Message}</Text></Text>
+                        <Text>{strings('subscriptionPage.address')} <Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
+                        <Text>{strings('subscriptionPage.staduimName')} <Text style={{color: '#9b9b9b'}}>{stadiumName}</Text></Text>
+                        <Text>{strings('subscriptionPage.time')} <Text style={{color: '#9b9b9b'}}>{Day} ({Hour})</Text></Text>
+                        <Text>{strings('subscriptionPage.payment')} <Text style={{color: '#9b9b9b'}}>{payment}</Text></Text>
+                        <Text>{strings('subscriptionPage.status')} <Text style={{color: 'green'}}>{Status}</Text><Text>  {strings('subscriptionPage.message')}</Text><Text> {Message}</Text></Text>
                     </View>
                     <View style={styles.buttonsView}>
                         <TouchableOpacity style={styles.buttons} onPress={() => Alert.alert('Action!','Edit')}>
-                            <Text style={styles.buttonsText}>Edit</Text>
+                            <Text style={styles.buttonsText}>{strings('subscriptionPage.edit')}</Text>
                         </TouchableOpacity >
                         <TouchableOpacity style={[ styles.buttons, { marginTop: 12 } ]} onPress={() => {
                             this.setModalVisible(true);
                             this.setState({Cancel: {IdSubscription, Status}})
                         }}>
-                            <Text style={styles.buttonsText}>Cancel</Text>
+                            <Text style={styles.buttonsText}>{strings('subscriptionPage.cancel')}</Text>
                         </TouchableOpacity >
                     </View>
                 </View>
@@ -144,7 +145,7 @@ export default class Subscriptions extends React.Component {
         return (
             <View style={styles.container}>
                 <TouchableOpacity style={styles.newSubscriptionButton} onPress={() => this.props.navigation.navigate('ChooseStadium')}>
-                    <Text style={styles.newSubscriptionButtonText}>Add new subscription</Text>
+                    <Text style={styles.newSubscriptionButtonText}>{strings('subscriptionPage.addNewOne')}</Text>
                 </TouchableOpacity >
                 <ScrollView refreshControl={
                     <RefreshControl
@@ -168,7 +169,7 @@ export default class Subscriptions extends React.Component {
                                     </View>
                                 )
                             })
-                            : <View style={styles.noOrders}><Text>Request orders is empty</Text></View>
+                            : <View style={styles.noOrders}><Text>{strings('subscriptionPage.emptySubscription')}</Text></View>
                 }
                 </ScrollView>
                 <ModalWrapper
@@ -183,7 +184,7 @@ export default class Subscriptions extends React.Component {
                                 <TextInput
                                     style={styles.textArea}
                                     underlineColorAndroid="transparent"
-                                    placeholder="Enter your cancellation reason"
+                                    placeholder={strings('subscriptionPage.cancelReason')}
                                     placeholderTextColor="grey"
                                     numberOfLines={10}
                                     multiline={true}
@@ -197,8 +198,8 @@ export default class Subscriptions extends React.Component {
                             </View>
                             <View style={styles.cancelButtons}>
 
-                                <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
-                                <Button title="SEND" type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelSubscription(this.state.messageCancellation)}} />
+                                <Button title={strings('subscriptionPage.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
+                                <Button title={strings('subscriptionPage.send')} type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelSubscription(this.state.messageCancellation)}} />
                             </View>
                         </View>
                     </View>

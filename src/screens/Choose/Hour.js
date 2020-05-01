@@ -8,6 +8,7 @@ import CalDate from "./CalDate";
 import moment from "moment";
 import {db} from "../../services/FireBaseConfig";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import {strings} from "../../translations/translate";
 
 export default class Hour extends Component {
     constructor(props){
@@ -129,7 +130,7 @@ export default class Hour extends Component {
         return (
             <View>
                 <View>
-                    <Button onPress={showDatepicker} title="Choose The Day" />
+                    <Button onPress={showDatepicker} title={strings('chooseHourPage.chooseDayButton')} />
                 </View>
                 {show && (
                     <RNDateTimePicker
@@ -193,7 +194,7 @@ export default class Hour extends Component {
                                                         IdStaduim: this.IdStaduim,
                                                         idProgram: program.id,
                                                     })}>
-                                                    <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>Reserve</Text>
+                                                    <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>{strings('chooseHourPage.reserve')}</Text>
                                                 </TouchableOpacity>
                                         }
                                     </View>
@@ -218,7 +219,7 @@ export default class Hour extends Component {
                                             {
                                                 program.reserved ?
                                                     <TouchableOpacity disabled style={styles.ButtonDisable} >
-                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>Reserved</Text>
+                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>{strings('chooseHourPage.reserved')}</Text>
                                                     </TouchableOpacity> :
                                                     <TouchableOpacity style={styles.Button} onPress={() =>
                                                         this.props.navigation.navigate('Order_Summary', {
@@ -235,13 +236,13 @@ export default class Hour extends Component {
                                                             IdStaduim: this.IdStaduim,
                                                             idProgram: program.id,
                                                         })}>
-                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>Reserve</Text>
+                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>{strings('chooseHourPage.reserve')}</Text>
                                                     </TouchableOpacity>
                                             }
                                         </View>
                                     )
                                 }) :
-                            <View style={styles.noOrders}><Text>Empty</Text>
+                            <View style={styles.noOrders}><Text>{strings('chooseHourPage.empty')}</Text>
                         </View>
                 }
 

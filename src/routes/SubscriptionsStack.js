@@ -6,31 +6,32 @@ import ChooseStadium from "../screens/Subscriptions/ChooseStadium";
 import ChooseTime from "../screens/Subscriptions/ChooseTime";
 import RequestSentSubscription from "../screens/Subscriptions/RequestSent";
 import StaduimsOnListSubscription from "../screens/Subscriptions/StaduimsOnListSubscription";
+import {strings} from '../translations/translate';
 const screens = {
     Subscriptions:{
         screen: Subscriptions,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='Subscriptions'/>,
+                headerTitle: () => <Header navigation={navigation} title={strings('subscriptionPage.pageTitle')}/>,
             }
         }
     },
     ChooseStadium: {
       screen: ChooseStadium,
       navigationOptions: {
-        title: 'Choose a stadium',
+        title: strings('subscriptionPage.chooseStaduim'),
       }
     },
     ChooseTime: {
         screen: ChooseTime,
         navigationOptions: {
-            title: 'Choose time',
+            title: strings('chooseTimePage.pageTitle'),
         }
     },
     StaduimsOnListSubscription: {
         screen: StaduimsOnListSubscription,
         navigationOptions: {
-            title: 'Choose stadium list',
+            title: strings('homePage.staduimList'),
         }
     },
     RequestSentSubscription: {

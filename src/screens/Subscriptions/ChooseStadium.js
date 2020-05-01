@@ -19,6 +19,7 @@ import {Linking} from 'expo';
 import * as IntentLauncher from 'expo-intent-launcher';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from "react-native-star-rating";
+import {strings} from "../../translations/translate";
 
 
 export default class ChooseStadium extends Component {
@@ -45,7 +46,7 @@ export default class ChooseStadium extends Component {
 
             if (Platform.OS === 'android' && !Constants.isDevice || Platform.OS === 'ios' && !Constants.isDevice) {
                 this.setState({
-                    errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+                    errorMessage: strings('homePage.errorPlatform'),
                 });
             } else {
                 this._getLocationAsync();
@@ -77,14 +78,14 @@ export default class ChooseStadium extends Component {
 
     };
     requestlocation =()=>{
-        Alert.alert("alert Message", "Allow Location", [
+        Alert.alert(strings('homePage.alertMessage'), strings('homePage.allowLocation'), [
             {
-                text: 'Open Settings',
+                text: strings('homePage.openSetting'),
                 onPress: () => this.goToSettings(),
                 style: 'cancel',
             },
             {
-                text: 'Cancel',
+                text: strings('homePage.cancel'),
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
             },
@@ -129,7 +130,7 @@ export default class ChooseStadium extends Component {
 
     StadiumList = ({stadiums: {stadiums: images,latitude,longitude, responsibleName, stadiumName, stadiumAddress, phoneNumber, uid,city},IdStaduim}) => {
         return(
-            <Marker coordinate={{ latitude: latitude, longitude: longitude }}>
+            <Marker coordinate={{ latitude: parseInt(latitude), longitude: parseInt(longitude) }}>
                 <View style={styles.cardStyle}>
                     <Callout onPress={() => this.props.navigation.navigate('ChooseTime', {
                         stadiumName:stadiumName,
@@ -156,10 +157,10 @@ export default class ChooseStadium extends Component {
                         </View>
                         <Text style={{marginLeft:50}}>70m</Text>
                         <View style={styles.infos}>
-                            <Text>Address : <Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
-                            <Text>Phone Number: <Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
-                            <Text>City: <Text style={{color: '#9b9b9b'}}>{city}</Text></Text>
-                            <Text>Last Feedback :</Text>
+                            <Text>{strings('homePage.address')}<Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
+                            <Text>{strings('homePage.phoneNumber')}<Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
+                            <Text>{strings('homePage.city')}<Text style={{color: '#9b9b9b'}}>{city}</Text></Text>
+                            <Text>{strings('homePage.lastFeedback')}</Text>
                             <View style={styles.feedbacksView}>
                                 <StarRating
                                     disabled={false}
@@ -171,7 +172,7 @@ export default class ChooseStadium extends Component {
                                     fullStarColor={'#1db700'}
                                     emptyStarColor={'#1db700'}
                                 />
-                                <Text style={styles.feedbacksNumber}>Nice</Text>
+                                <Text style={styles.feedbacksNumber}>{strings('homePage.feedbackText')}</Text>
                             </View>
 
                         </View>
@@ -181,7 +182,7 @@ export default class ChooseStadium extends Component {
                                 IdResponsible:uid,
                                 IdStaduim:IdStaduim,
                             })}>
-                                <Text style={styles.buttonsText}>Confirm</Text>
+                                <Text style={styles.buttonsText}>{strings('homePage.confirm')}</Text>
                             </TouchableOpacity >
                         </View>
                     </Callout>
@@ -220,7 +221,7 @@ export default class ChooseStadium extends Component {
                     }
                 </MapView>
                 <View style={{marginTop:650}}>
-                    <Button title='List Mode' onPress={() => this.props.navigation.navigate('StaduimsOnListSubscription',{
+                    <Button title={strings('homePage.listMode')} onPress={() => this.props.navigation.navigate('StaduimsOnListSubscription',{
                         UserLocation:this.state.initialPosition,
                     })}/>
                 </View>

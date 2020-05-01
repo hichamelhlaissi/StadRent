@@ -17,6 +17,7 @@ import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import StarRating from "react-native-star-rating";
 import {auth, db} from "../services/FireBaseConfig";
 import moment from "moment";
+import {strings} from "../translations/translate";
 
 export default class Order_Summary extends Component {
 
@@ -156,13 +157,13 @@ export default class Order_Summary extends Component {
                     </View>
                     <View style={styles.buttonsView}>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.navigate('Home')}>
-                            <Text style={styles.buttonsText}>Change</Text>
+                            <Text style={styles.buttonsText}>{strings('orderSummaryPage.change')}</Text>
                         </TouchableOpacity >
                     </View>
                 </View>
                 <View style={styles.cardStyle}>
                     <View style={styles.infos}>
-                        <Text style={styles.name}>Details</Text>
+                        <Text style={styles.name}>{strings('orderSummaryPage.details')}</Text>
                         <View style={styles.status}>
                             <Text style={styles.statusText}>{this.stadiumName} | {this.city}</Text>
                         </View>
@@ -172,13 +173,13 @@ export default class Order_Summary extends Component {
                     </View>
                     <View style={styles.buttonsView}>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.goBack()}>
-                            <Text style={styles.buttonsText}>Change</Text>
+                            <Text style={styles.buttonsText}>{strings('orderSummaryPage.change')}</Text>
                         </TouchableOpacity >
                     </View>
                     <Text style={styles.errorText}>{this.state.error}</Text>
                 </View>
                 <TouchableOpacity style={styles.ConfirmButton}  onPress={() =>this.confirmOrder()}>
-                    <Text style={{textAlign: 'center', fontSize: 30, color: '#fff',marginTop: 3,}}>CONFIRM</Text>
+                    <Text style={{textAlign: 'center', fontSize: 30, color: '#fff',marginTop: 3,}}>{strings('orderSummaryPage.confirm')}</Text>
                 </TouchableOpacity >
 
             </View>

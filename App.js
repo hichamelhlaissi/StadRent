@@ -29,7 +29,6 @@ import Constants from 'expo-constants';
          }
 
          const token = await Notifications.getExpoPushTokenAsync();
-         console.log(token);
          if (auth.currentUser !== null){
              let userCon = auth.currentUser.uid;
              let ref = db.ref("/users");
@@ -41,11 +40,13 @@ import Constants from 'expo-constants';
                  });
 
              }).then(async function (data) {
-                 let updates = {};
-                 updates['/notificationToken'] = token;
-                 await db.ref('/users/'+keytable).update(updates);
+                 // let updates = {};
+                 // updates['/notificationToken'] = token;
+                 console.log('wa rah dkhlt');
+                 await db.ref('/users/'+keytable).update({
+                     notificationToken:  token
+                 });
              });
-
          }
 
          this.setState({ expoPushToken: token });
@@ -66,7 +67,8 @@ import Constants from 'expo-constants';
 export const _handleNotification = notification => {
     Vibration.vibrate();
     console.log(notification);
-    this.setState({ notification: notification });
+    //
+    //this.setState({ notification: notification });
 };
 
 export default class App extends React.Component{

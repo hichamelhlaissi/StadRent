@@ -4,7 +4,7 @@ import Geocoder from 'react-native-geocoding';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/Entypo';
 import {auth, db} from "../../services/FireBaseConfig";
-
+import {strings} from "../../translations/translate";
 
 export default class ChooseTime extends React.Component{
     state = {
@@ -46,15 +46,15 @@ export default class ChooseTime extends React.Component{
         this.stadiumAddress= state.params.stadiumAddress;
         this.IdResponsible=state.params.IdResponsible;
         this.IdStaduim=state.params.IdStaduim;
-        console.log(this.stadiumName,this.city,this.stadiumAddress,this.IdResponsible,this.IdStaduim,'-------');
-            Geocoder.init("AIzaSyCoIzI4JvkT0MjvaBXH-OSt6d6pYuU1dMg");
-            Geocoder.from(latitude, longitude).then(json => {
-                this.state.street_number = json.results[0].address_components[0].long_name;
-                this.state.route = json.results[0].address_components[1].long_name;
-                this.state.subLocality = json.results[0].address_components[2].long_name;
-                this.state.locality = json.results[0].address_components[3].long_name;
-                this.setState({fullAddress: this.state.street_number+", "+this.state.route+", "+this.state.subLocality+", "+this.state.locality});
-            });
+        this.phoneNumber=state.params.phoneNumber;
+            // Geocoder.init("AIzaSyCoIzI4JvkT0MjvaBXH-OSt6d6pYuU1dMg");
+            // Geocoder.from(latitude, longitude).then(json => {
+            //     this.state.street_number = json.results[0].address_components[0].long_name;
+            //     this.state.route = json.results[0].address_components[1].long_name;
+            //     this.state.subLocality = json.results[0].address_components[2].long_name;
+            //     this.state.locality = json.results[0].address_components[3].long_name;
+            //     this.setState({fullAddress: this.state.street_number+", "+this.state.route+", "+this.state.subLocality+", "+this.state.locality});
+            // });
     }
     onSelectDay(value) {
         this.setState({day: value});
@@ -78,7 +78,7 @@ export default class ChooseTime extends React.Component{
     addSubscription=(Sent=()=>this.props.navigation.navigate('RequestSentSubscription'))=>{
         if (this.state.subscriptionName === "" || this.state.day === null || this.state.hour === null || this.state.payment === "")
         {
-            Alert.alert('Error!!', 'Please enter all information')
+            Alert.alert(strings('chooseTimePage.error'), strings('chooseTimePage.errorMessage'))
         }else{
             this.setState({isLoading: true});
             setTimeout(function () {
@@ -100,7 +100,7 @@ export default class ChooseTime extends React.Component{
                     Message: '',
                 }, function (error) {
                     if (error) {
-                        Alert.alert('Error', error)
+                        Alert.alert(strings('chooseTimePage.error'), error.message)
                     } else {
                         console.log('success');
                         Sent();
@@ -126,7 +126,7 @@ export default class ChooseTime extends React.Component{
                     <TextInput
                         style={styles.inputSubscriptionName}
                         maxLength={22}
-                        placeholder="Subscription name"
+                        placeholder={strings('chooseTimePage.subscriptionName')}
                         underlineColorAndroid = "transparent"
                         placeholderTextColor = "#a9a9a1"
                         autoCapitalize = "none"
@@ -135,46 +135,46 @@ export default class ChooseTime extends React.Component{
                     <RNPickerSelect
                         onValueChange={(value) => this.onSelectDay(value)}
                         items={[
-                            { label: 'Lundi', value: 'Lundi' },
-                            { label: 'Mardi', value: 'Mardi' },
-                            { label: 'Mercredi', value: 'Mercredi' },
-                            { label: 'Jeudi', value: 'Jeudi' },
-                            { label: 'Vendredi', value: 'Vendredi' },
-                            { label: 'Samedi', value: 'Samedi' },
-                            { label: 'Dimanche', value: 'Dimanche' },
+                            { label: strings('chooseTimePage.Monday'), value: strings('chooseTimePage.Monday') },
+                            { label: strings('chooseTimePage.Tuesday'), value: strings('chooseTimePage.Tuesday') },
+                            { label: strings('chooseTimePage.Wednesday'), value: strings('chooseTimePage.Wednesday') },
+                            { label: strings('chooseTimePage.Thursday'), value: strings('chooseTimePage.Thursday') },
+                            { label: strings('chooseTimePage.Friday'), value: strings('chooseTimePage.Friday') },
+                            { label: strings('chooseTimePage.Saturday'), value: strings('chooseTimePage.Saturday') },
+                            { label: strings('chooseTimePage.Sunday'), value: strings('chooseTimePage.Sunday') },
                         ]}
-                        placeholder={{label: 'Select a day', value: null}}
+                        placeholder={{label: strings('chooseTimePage.selectDay'), value: null}}
                         style={{color: 'red'}}
                     />
                     <RNPickerSelect
                         onValueChange={(value) => this.onSelectHour(value)}
                         items={this.state.hoursData}
-                        placeholder={{label: 'Select an hour', value: null}}
+                        placeholder={{label: strings('chooseTimePage.selectHour'), value: null}}
 
                     />
                     <RNPickerSelect
                         onValueChange={(value) => this.onSelectPayment(value)}
                         items={[
-                            { label: 'Weekly', value: 'Weekly' },
-                            { label: 'Monthly', value: 'Monthly' },
+                            { label: strings('chooseTimePage.Weekly'), value: strings('chooseTimePage.Weekly') },
+                            { label: strings('chooseTimePage.Monthly'), value: strings('chooseTimePage.Monthly') },
                         ]}
-                        placeholder={{label: 'Select payment type', value: null}}
+                        placeholder={{label: strings('chooseTimePage.paymentType'), value: null}}
 
                     />
                     <View style={styles.cardStyle}>
                         <View>
                             <Text style={styles.subscriptionName}><Icon name="vinyl" size={22} color="#5780D9" /> {this.state.subscriptionName}</Text>
                             <View style={styles.infos}>
-                                <Text>Address : <Text style={{color: '#9b9b9b'}}>{this.state.fullAddress}</Text></Text>
-                                <Text>Day : <Text style={{color: '#9b9b9b'}}>{this.state.day}</Text></Text>
-                                <Text>Hour : <Text style={{color: '#9b9b9b'}}>{this.state.hour}</Text></Text>
-                                <Text>Payment : <Text style={{color: '#9b9b9b'}}>{this.state.payment}</Text></Text>
+                                <Text>{strings('chooseTimePage.address')} <Text style={{color: '#9b9b9b'}}>{this.stadiumAddress}</Text></Text>
+                                <Text>{strings('chooseTimePage.phoneNumber')} <Text style={{color: '#9b9b9b'}}>{this.phoneNumber}</Text></Text>
+                                <Text>{strings('chooseTimePage.city')} <Text style={{color: '#9b9b9b'}}>{this.city}</Text></Text>
+                                <Text>{strings('chooseTimePage.lastFeedback')} <Text style={{color: '#9b9b9b'}}>Nice</Text></Text>
                             </View>
                         </View>
                     </View>
                 </View>
                 <TouchableOpacity style={styles.nextButton} onPress={() => this.addSubscription()}>
-                    <Text style={styles.nextButtonText}>Send request</Text>
+                    <Text style={styles.nextButtonText}>{strings('chooseTimePage.sendRequest')}</Text>
                 </TouchableOpacity>
             </View>
         );

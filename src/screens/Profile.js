@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import * as  ImagePicker from 'expo-image-picker';
 import {auth, db, storage} from "../services/FireBaseConfig";
 import {AntDesign, MaterialIcons,Entypo} from '@expo/vector-icons';
+import {strings} from '../translations/translate';
+
 
 export default class Profile extends React.Component{
     constructor(props) {
@@ -35,10 +37,10 @@ export default class Profile extends React.Component{
         if (this.state.user.emailVerified){
             console.log(this.state.user.emailVerified);
         }if (!this.state.user.emailVerified){
-                this.state.isEmailVerified="Email verification is required to make an order";
+                this.state.isEmailVerified= strings('profilePage.emailVerification');
             return (<TouchableOpacity style={styles.isEmailVerified} onPress={()=>this.sendEmailVerification()}>
                 <Text>
-                    Confirm
+                    {strings('profilePage.confirm')}
                 </Text>
             </TouchableOpacity>)
         }
@@ -49,11 +51,9 @@ export default class Profile extends React.Component{
         let user = auth.currentUser;
 
         user.sendEmailVerification().then(function() {
-            console.log('tsayft');
             reloadData();
             Change();
         }).catch(function(error) {
-            console.log('walo email ki walo');
             errors(error.message);
             Change();
         });
@@ -135,7 +135,6 @@ export default class Profile extends React.Component{
                 EmailV();
             }).catch(function(error) {
                 errors(error.message);
-                console.log('An error happened', error);
                 dataSaved();
                 EmailV();
             });
@@ -165,9 +164,9 @@ export default class Profile extends React.Component{
     };
 
     GetProfile =(dataUser, Change=()=>this.setState({Data:dataUser, isLoading: false,}),
-                 First=()=>this.setState({First:'First name is required to make an order'}),
-                 Last=()=>this.setState({Last:'Last name is required to make an order'}),
-                 Phone=()=>this.setState({Phone:'Phone number is required to make an order'}))=>{
+                 First=()=>this.setState({First:strings('profilePage.firstNameCheck')}),
+                 Last=()=>this.setState({Last:strings('profilePage.lastNameCheck')}),
+                 Phone=()=>this.setState({Phone:strings('profilePage.phoneNumberCheck')}))=>{
         this.state.user = auth.currentUser;
         let userCon = this.state.user.uid;
         let ref = db.ref("/users");
@@ -224,20 +223,17 @@ export default class Profile extends React.Component{
         this.setState({modalVisible: visible});
     }
     UpdatePassword=(values)=> {
-        console.log('tmanyiiik');
         let user =auth.currentUser;
         let NewPassword = values.NewPassword;
         let NewPassword2= values.NewPassword2;
 
         if (NewPassword === NewPassword2){
-            console.log('tmanyiiik');
             user.updatePassword(NewPassword).then(function() {
             }).catch(function(error) {
                 errors(error.message);
-                console.log('walllllllllllo');
             });
         }else {
-            this.setState({error:'Password not match'})
+            this.setState({error:strings('profilePage.passwordCheck')})
         }
 
         const errors=(error)=>{
@@ -282,13 +278,13 @@ export default class Profile extends React.Component{
             Email: yup.string().required().email(),
             Gender: yup.string().max(40).min(3),
             Phone_Number : yup.number().positive().nullable()
-                .test('is-num-1-10','Phone number most be 10 numbers', (val)=>{
+                .test('is-num-1-10',strings('profilePage.isNumberValid'), (val)=>{
                     return parseInt(val) <1234567899 && parseInt(val) >=123456789;
                 })
         });
         const CheckPassword = yup.object({
-            NewPassword: yup.string().required().max(40).min(8).test('value-name', 'Space not allowed', (yourValue) => !yourValue.includes(' ')),
-            NewPassword2: yup.string().required().max(40).min(8).test('value-name', 'Space not allowed', (yourValue) => !yourValue.includes(' ')),
+            NewPassword: yup.string().required().max(40).min(8).test('value-name', strings('profilePage.spaceNotAllowed'), (yourValue) => !yourValue.includes(' ')),
+            NewPassword2: yup.string().required().max(40).min(8).test('value-name', strings('profilePage.spaceNotAllowed'), (yourValue) => !yourValue.includes(' ')),
         });
         if (this.state.isLoading) {
             return (
@@ -320,8 +316,8 @@ export default class Profile extends React.Component{
                         }}>
                         {(props)=>(
                             <View style={styles.Form}>
-                                <Text style={{fontSize:40, marginBottom:30, textAlign:'center'}}>Change Password</Text>
-                                <Text> New Password </Text>
+                                <Text style={{fontSize:40, marginBottom:30, textAlign:'center'}}>{strings('profilePage.updatePasswordButton')}</Text>
+                                <Text> {strings('profilePage.newPassword')} </Text>
                                 <TextInput style={styles.input}
                                            secureTextEntry={true}
                                            onChangeText={props.handleChange('NewPassword')}
@@ -330,7 +326,7 @@ export default class Profile extends React.Component{
                                 />
                                 <Text style={styles.errorText}>{props.touched.NewPassword && props.errors.NewPassword}</Text>
 
-                                <Text> Repeat New Password </Text>
+                                <Text> {strings('profilePage.repeatPassword')} </Text>
                                 <TextInput style={styles.input}
                                            secureTextEntry={true}
                                            onChangeText={props.handleChange('NewPassword2')}
@@ -339,11 +335,11 @@ export default class Profile extends React.Component{
                                 />
                                 <Text style={styles.errorText}>{props.touched.NewPassword2 && props.errors.NewPassword2}</Text>
                                 <View >
-                                    <Button title='Change Password' style={styles.Button} onPress={props.handleSubmit}/>
+                                    <Button title={strings('profilePage.updatePasswordButton')} style={styles.Button} onPress={props.handleSubmit}/>
                                 </View>
                                 <View style={{marginTop: 20}}>
 
-                                    <Button title='Cancel' style={{marginTop:20}} onPress={()=> CloseModal()}/>
+                                    <Button title={strings('profilePage.cancelPasswordButton')} style={{marginTop:20}} onPress={()=> CloseModal()}/>
                                 </View>
 
                             </View>
@@ -393,11 +389,12 @@ export default class Profile extends React.Component{
                             validationSchema={CheckField}
                          >
                             {(props) =>(
+
                                 <View style={styles.Form}>
                                     <Text style={styles.errorText}>
                                         {this.state.error}
                                     </Text>
-                                    <Text> username </Text>
+                                    <Text> {strings('profilePage.username')} </Text>
                                     <TextInput style={styles.input}
 
                                                onChangeText={props.handleChange('Name')}
@@ -407,7 +404,7 @@ export default class Profile extends React.Component{
                                     />
                                     <Text style={styles.errorText}>{props.touched.userName && props.errors.userName}</Text>
 
-                                    <Text> First Name </Text>
+                                    <Text> {strings('profilePage.firstName')} </Text>
                                     <TextInput style={styles.input}
 
                                                onChangeText={props.handleChange('FirstName')}
@@ -417,7 +414,7 @@ export default class Profile extends React.Component{
                                     <Text style={styles.errorText}>{this.state.First}</Text>
                                     <Text style={styles.errorText}>{props.touched.FirstName && props.errors.FirstName}</Text>
 
-                                    <Text> Last Name </Text>
+                                    <Text> {strings('profilePage.lastName')} </Text>
                                     <TextInput style={styles.input}
                                                placeholder={this.state.Data.LastName}
                                                onChangeText={props.handleChange('LastName')}
@@ -426,7 +423,7 @@ export default class Profile extends React.Component{
                                     />
                                     <Text style={styles.errorText}>{this.state.Last}</Text>
                                     <Text style={styles.errorText}>{props.touched.LastName && props.errors.LastName}</Text>
-                                    <Text> Phone Number </Text>
+                                    <Text> {strings('profilePage.phoneNumber')} </Text>
                                     <View style={{flexDirection:"row"}}>
                                         <TextInput style={styles.numberCode}
                                                    value='+212'
@@ -444,7 +441,7 @@ export default class Profile extends React.Component{
                                     <Text style={styles.errorText}>{this.state.Phone}</Text>
                                     <Text style={styles.errorText}>{props.touched.Phone_Number && props.errors.Phone_Number}</Text>
 
-                                    <Text> Email </Text>
+                                    <Text> {strings('profilePage.email')} </Text>
                                     <View style={{flexDirection:"row"}}>
 
                                     <TextInput style={styles.inputEmail}
@@ -460,7 +457,7 @@ export default class Profile extends React.Component{
                                     <TouchableOpacity onPress={() => {
                                         this.setModalVisible(true);
                                     }}>
-                                        <Text > Change Password </Text>
+                                        <Text > {strings('profilePage.updatePasswordButton')} </Text>
                                         <TextInput style={styles.input}
 
                                                    placeholder='********'
@@ -473,7 +470,7 @@ export default class Profile extends React.Component{
 
                                     <Text style={styles.errorText}>{props.touched.Password && props.errors.Password}</Text>
 
-                                    <Text> Gender </Text>
+                                    <Text> {strings('profilePage.gender')} </Text>
                                     <Picker
                                         style={styles.input}
                                         selectedValue={props.values.Gender}
@@ -483,7 +480,7 @@ export default class Profile extends React.Component{
                                     </Picker>
                                     <Text style={styles.errorText}>{props.touched.Gender && props.errors.Gender}</Text>
 
-                                    <Text> Birth Day </Text>
+                                    <Text> {strings('profilePage.birthDay')} </Text>
                                     <View style={{flexDirection:"row", marginTop: 5}}>
                                     <Text style={{marginLeft:5}}> Year </Text>
                                     <Text style={{marginLeft:60}}> Month </Text>
@@ -522,7 +519,7 @@ export default class Profile extends React.Component{
                                     <Text style={styles.errorText}>{props.touched.Month && props.errors.Month}</Text>
                                     <Text style={styles.errorText}>{props.touched.Day && props.errors.Day}</Text>
 
-                                    <Text> City </Text>
+                                    <Text> {strings('profilePage.city')} </Text>
                                     <TextInput style={styles.input}
                                                placeholder={this.state.Data.City}
                                                onChangeText={props.handleChange('City')}
@@ -531,7 +528,7 @@ export default class Profile extends React.Component{
                                     />
                                     <Text style={styles.errorText}>{props.touched.City && props.errors.City}</Text>
 
-                                    <Text> Language </Text>
+                                    <Text> {strings('profilePage.language')} </Text>
                                     <TextInput style={styles.input}
                                                placeholder='Anglais'
                                                onChangeText={props.handleChange('Language')}
@@ -541,7 +538,7 @@ export default class Profile extends React.Component{
                                     />
                                     <Text style={styles.errorText}>{props.touched.Language && props.errors.Language}</Text>
 
-                                    <Button title='submit' style={styles.Button} onPress={props.handleSubmit}/>
+                                    <Button title={strings('profilePage.submit')} style={styles.Button} onPress={props.handleSubmit}/>
                                 </View>
                             )}
 

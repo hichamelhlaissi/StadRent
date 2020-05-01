@@ -7,12 +7,14 @@ import Order_Summary from "../screens/Order_Summary";
 import RequestSent from "../screens/RequestSent";
 import React from 'react';
 import StaduimOnList from "../screens/StaduimsOnList";
+import {strings} from '../translations/translate';
+
 const screens = {
   Home:{
       screen: Home,
     navigationOptions: ({ navigation }) => {
         return {
-        headerTitle: () => <Header navigation={navigation} title='Home'/>,
+        headerTitle: () => <Header navigation={navigation} title={strings('homePage.pageTitle')}/>,
         }
     }
   },
@@ -21,7 +23,7 @@ const screens = {
         screen: Order_Summary,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <HeaderNone navigation={navigation} title='Order Summary'/>,
+                headerTitle: () => <HeaderNone navigation={navigation} title={strings('orderSummaryPage.pageTitle')}/>,
             }
         }
     },
@@ -29,7 +31,7 @@ const screens = {
         screen: Hour,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <HeaderNone navigation={navigation} title='Choose Hour'/>,
+                headerTitle: () => <HeaderNone navigation={navigation} title={strings('chooseHourPage.pageTitle')}/>,
             }
         }
     },
@@ -38,7 +40,7 @@ const screens = {
         screen: StaduimOnList,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <HeaderNone navigation={navigation} title='Staduim List'/>,
+                headerTitle: () => <HeaderNone navigation={navigation} title={strings('homePage.staduimList')}/>,
             }
         }
     },

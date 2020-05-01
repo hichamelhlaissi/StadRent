@@ -5,6 +5,7 @@ import {auth, db, storage} from '../services/FireBaseConfig';
 import StarRating from "react-native-star-rating";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Autocomplete from "react-native-autocomplete-input";
+import {strings} from "../translations/translate";
 
 
 
@@ -27,25 +28,6 @@ export default class StaduimOnList extends React.Component{
 
     }
 
-    // getDistance=(NearbyStaduims, KeyData)=>{
-    //
-    //     fetch('https://maps.googleapis.com/maps/api/distancematrix/json?origins='+this.UserLocation+'&destinations='+NearbyStaduims+'&key=AIzaSyCoIzI4JvkT0MjvaBXH-OSt6d6pYuU1dMg')
-    //         .then((response) => response.json())
-    //         .then((data)=>{
-    //
-    //             for (const Stads of data.rows){
-    //                 for (const DataS of Stads.elements){
-    //                     this.setState({distance:DataS.distance,duration:DataS.duration});
-    //                     //this.state.distance=DataS.distance.text;
-    //                     //console.log(KeyData);
-    //
-    //
-    //                 }
-    //             }
-    //         });
-    //
-    //
-    // };
 
     onStarRatingPress(rating) {
         this.setState({
@@ -122,10 +104,10 @@ export default class StaduimOnList extends React.Component{
                         <Text style={styles.feedbacksNumber}>(22)</Text>
                     </View>
                     <View style={styles.infos}>
-                        <Text>Address : <Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
-                        <Text>Phone number : <Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
-                        <Text>Payment : <Text style={{color: '#9b9b9b'}}>{payment}</Text></Text>
-                        <Text>Last Feedback :</Text>
+                        <Text>{strings('homePage.address')}<Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
+                        <Text>{strings('homePage.phoneNumber')}<Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
+                        <Text>{strings('homePage.city')}<Text style={{color: '#9b9b9b'}}>{city}</Text></Text>
+                        <Text>{strings('homePage.lastFeedback')}</Text>
                         <View style={styles.feedbacksView}>
                             <StarRating
                                 disabled={false}
@@ -137,7 +119,7 @@ export default class StaduimOnList extends React.Component{
                                 fullStarColor={'#1db700'}
                                 emptyStarColor={'#1db700'}
                             />
-                            <Text style={styles.feedbacksNumber}>Nice</Text>
+                            <Text style={styles.feedbacksNumber}>{strings('homePage.feedbackText')}</Text>
                         </View>
                     </View>
                 </View>
@@ -158,22 +140,18 @@ export default class StaduimOnList extends React.Component{
         };
 
     };
-    //SetDistance=(NearbyStaduims,KeyData)=>this.getDistance(NearbyStaduims,KeyData),
     getStadiums =(City,Data,Change=()=>{this.setState({stadiums: Data, isLoading:false})},
 
     )=>{
         console.log(City);
         if (City === undefined){
             this.setState({isLoading:true});
-            console.log('No city');
             setTimeout(function(){
                 let ref = db.ref("/stadiums");
                 let query = ref.orderByKey();
                 query.once("value", function (snapshot) {
                     snapshot.forEach(function (child) {
                         Data = snapshot.val();
-                        // coords = child.val().latitude + "," + child.val().longitude;
-                        // KeyData= child.key;
                         Change();
                     });
                 }).then( r =>console.log('success'));
@@ -182,7 +160,6 @@ export default class StaduimOnList extends React.Component{
             this.setState({isLoading:true});
             //City= this.state.city;
             let cityChosen = City.city;
-            console.log(City.city);
             setTimeout(function(){
                 let ref = db.ref("/stadiums");
                 let query = ref.orderByChild("city").equalTo(cityChosen);
@@ -232,7 +209,7 @@ export default class StaduimOnList extends React.Component{
                         value={this.state.query}
                         defaultValue={query}
                         onChangeText={text => this.setState({ query: text })}
-                        placeholder="Enter city here"
+                        placeholder={strings('homePage.enterCity')}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={(data) => {data=item.City; this.CityChoose(data)}}>
                                 <Text style={styles.itemText}>
@@ -259,7 +236,7 @@ export default class StaduimOnList extends React.Component{
                                 })
                                 :
                                 stadiumsKeys.length > 0
-                                    ? <View style={styles.noStadiums}><Text>Your City Have No Staduims</Text></View>
+                                    ? <View style={styles.noStadiums}><Text>{strings('homePage.noCItyStaduim')}</Text></View>
                                     : <View/>
                     }
                     </View>
