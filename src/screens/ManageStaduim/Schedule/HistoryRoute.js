@@ -6,6 +6,8 @@ import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import {auth, db} from "../../../services/FireBaseConfig";
 import {Entypo, FontAwesome, MaterialIcons} from '@expo/vector-icons';
 import {IsOrderDone, IsOrderValid} from "../../Orders/RequestRoute";
+import {strings} from '../../../../src/translations/translate';
+
 
 
 export default class HistoryRoute extends Component {
@@ -103,7 +105,7 @@ export default class HistoryRoute extends Component {
                             this.setState({dataReport: {IdOrders, uid, IdResponsible, IdStaduim}})
 
                             }}}>
-                            <Text style={styles.buttonsText}><MaterialIcons name="report" size={20} color="black"/> Report</Text>
+                            <Text style={styles.buttonsText}><MaterialIcons name="report" size={20} color="black"/> {strings('historyRoute.report')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -150,7 +152,7 @@ export default class HistoryRoute extends Component {
                                         </View>
                                     )
                                 })
-                                : <View style={styles.noOrders}><Text>Request orders is empty</Text></View>
+                                : <View style={styles.noOrders}><Text>{strings('historyRoute.empty')}</Text></View>
                     }
                     <ModalWrapper
                         animationType="slide"
@@ -164,7 +166,7 @@ export default class HistoryRoute extends Component {
                                     <TextInput
                                         style={styles.textArea}
                                         underlineColorAndroid="transparent"
-                                        placeholder="Enter your report reason"
+                                        placeholder={strings('historyRoute.reasonLabel')}
                                         placeholderTextColor="grey"
                                         numberOfLines={10}
                                         multiline={true}
@@ -178,8 +180,8 @@ export default class HistoryRoute extends Component {
                                 </View>
                                 <View style={styles.cancelButtons}>
 
-                                    <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
-                                    <Button title="SEND" type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.onReport(this.state.messageReport)}} />
+                                    <Button title={strings('historyRoute.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
+                                    <Button title={strings('historyRoute.send')} type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.onReport(this.state.messageReport)}} />
                                 </View>
                             </View>
                         </View>

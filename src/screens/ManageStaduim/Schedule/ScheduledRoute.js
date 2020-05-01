@@ -7,6 +7,7 @@ import {auth, db} from "../../../services/FireBaseConfig";
 import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
 import {IsOrderDone, IsOrderValid} from "../../Orders/RequestRoute";
 import {GetDataNotification, SendNotification} from "./RequestRoute";
+import {strings} from "../../../translations/translate";
 
 
 export default class ScheduledRoute extends Component {
@@ -101,7 +102,7 @@ export default class ScheduledRoute extends Component {
                             this.setModalVisible(true);
                             this.setState({Cancel: IdOrders})
                         }}>
-                            <Text style={styles.buttonsText}><MaterialIcons name="cancel" size={20} color="black"/> Cancel</Text>
+                            <Text style={styles.buttonsText}><MaterialIcons name="cancel" size={20} color="black"/> {strings('scheduleRoute.cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -148,7 +149,7 @@ export default class ScheduledRoute extends Component {
                                         </View>
                                     )
                                 })
-                                : <View style={styles.noOrders}><Text>Request orders is empty</Text></View>
+                                : <View style={styles.noOrders}><Text>{strings('scheduleRoute.empty')}</Text></View>
                     }
                     <ModalWrapper
                         animationType="slide"
@@ -162,7 +163,7 @@ export default class ScheduledRoute extends Component {
                                     <TextInput
                                         style={styles.textArea}
                                         underlineColorAndroid="transparent"
-                                        placeholder="Enter your cancellation reason"
+                                        placeholder={strings('scheduleRoute.reasonLabel')}
                                         placeholderTextColor="grey"
                                         numberOfLines={10}
                                         multiline={true}
@@ -176,8 +177,8 @@ export default class ScheduledRoute extends Component {
                                 </View>
                                 <View style={styles.cancelButtons}>
 
-                                    <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
-                                    <Button title="SEND" type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
+                                    <Button title={strings('scheduleRoute.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
+                                    <Button title={strings('scheduleRoute.send')} type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
                                 </View>
                             </View>
                         </View>

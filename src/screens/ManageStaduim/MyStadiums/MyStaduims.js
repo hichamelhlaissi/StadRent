@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {auth, db, storage} from './../../../services/FireBaseConfig';
+import {strings} from "../../../translations/translate";
 
 
 export default class MyStaduims extends React.Component{
@@ -47,12 +48,12 @@ export default class MyStaduims extends React.Component{
                 <View>
                     <Text style={styles.name}><Icon name="vinyl" size={22} color="#5780D9" /> {stadiumName}</Text>
                     <View style={styles.infos}>
-                        <Text>Responsible : <Text style={{color: '#9b9b9b'}}>{responsibleName}</Text></Text>
-                        <Text>Address : <Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
-                        <Text>Phone number : <Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
+                        <Text>{strings('myStadiums.responsible')}<Text style={{color: '#9b9b9b'}}>{responsibleName}</Text></Text>
+                        <Text>{strings('myStadiums.address')}<Text style={{color: '#9b9b9b'}}>{stadiumAddress}</Text></Text>
+                        <Text>{strings('myStadiums.phoneNumber')}<Text style={{color: '#9b9b9b'}}>{phoneNumber}</Text></Text>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '80%'}}>
-                            <Text>Payment : <Text style={{color: '#9b9b9b'}}>{payment}</Text></Text>
-                            <Text style={{fontWeight: 'bold'}}>Status :
+                            <Text>{strings('myStadiums.payment')}<Text style={{color: '#9b9b9b'}}>{payment}</Text></Text>
+                            <Text style={{fontWeight: 'bold'}}>{strings('myStadiums.status')}
                                 {
                                     status === "Accepted"
                                         ? <Text style={{color: 'green'}}>
@@ -74,10 +75,10 @@ export default class MyStaduims extends React.Component{
                     status === "Accepted" ?
                         <View style={styles.bottomView}>
                             <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.navigate('stadiumProgram', {data1: stadiumName, data2: id})}>
-                                <Text style={styles.buttonsText}>Add scheduled to the next week</Text>
+                                <Text style={styles.buttonsText}>{strings('myStadiums.add')}</Text>
                             </TouchableOpacity >
                             <TouchableOpacity style={styles.buttons} onPress={() => this.props.navigation.navigate('reserveToSomeone', {data1: stadiumName, data2: id})}>
-                                <Text style={styles.buttonsText}>Reserve to someone</Text>
+                                <Text style={styles.buttonsText}>{strings('myStadiums.reserve')}</Text>
                             </TouchableOpacity >
                         </View> :
                         <View></View>
@@ -105,10 +106,10 @@ export default class MyStaduims extends React.Component{
                                     )
                                 })
                                 :
-                                <View style={styles.noStadiums}><Text>You have no stadium to see</Text></View>
+                                <View style={styles.noStadiums}><Text>{strings('myStadiums.empty')}</Text></View>
                     }
                     <TouchableOpacity style={styles.addNewStadiumButton} onPress={() => this.props.navigation.navigate('addNewStadium')}>
-                        <Text style={styles.addNewStadiumButtonText}>Add new stadium</Text>
+                        <Text style={styles.addNewStadiumButtonText}>{strings('myStadiums.addNewStadium')}</Text>
                     </TouchableOpacity >
                 </ScrollView>
             </View>

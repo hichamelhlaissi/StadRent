@@ -6,6 +6,7 @@ import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import {auth, db} from "../../../services/FireBaseConfig";
 import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
 import {IsOrderDone, IsOrderValid} from "../../Orders/RequestRoute";
+import {strings} from "../../../translations/translate";
 
 export const SendNotification= async (message)=> {
     const response = await fetch('https://exp.host/--/api/v2/push/send', {
@@ -197,13 +198,13 @@ export default class RequestRoute extends Component {
                             this.AcceptOrder(IdStaduim, idProgram, Day, IdOrders)
                         }}>
                             <Text style={styles.buttonsText}><Icon name="map-marker-alt" size={15}
-                                                                   color="#EAE114"/> Accept</Text>
+                                                                   color="#EAE114"/> {strings('requestRoute.accept')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[styles.buttons, {marginTop: 12}]} onPress={() => {
                             this.setModalVisible(true);
                             this.setState({Cancel: IdOrders})
                         }}>
-                            <Text style={styles.buttonsText}><MaterialIcons name="cancel" size={20} color="black"/> Cancel</Text>
+                            <Text style={styles.buttonsText}><MaterialIcons name="cancel" size={20} color="black"/> {strings('requestRoute.cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -250,7 +251,7 @@ export default class RequestRoute extends Component {
                                         </View>
                                     )
                                 })
-                                : <View style={styles.noOrders}><Text>Request orders is empty</Text></View>
+                                : <View style={styles.noOrders}><Text>{strings('requestRoute.empty')}</Text></View>
                     }
                     <ModalWrapper
                         animationType="slide"
@@ -264,7 +265,7 @@ export default class RequestRoute extends Component {
                                     <TextInput
                                         style={styles.textArea}
                                         underlineColorAndroid="transparent"
-                                        placeholder="Enter your cancellation reason"
+                                        placeholder={strings('requestRoute.reasonLabel')}
                                         placeholderTextColor="grey"
                                         numberOfLines={10}
                                         multiline={true}
@@ -278,8 +279,8 @@ export default class RequestRoute extends Component {
                                 </View>
                                 <View style={styles.cancelButtons}>
 
-                                    <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
-                                    <Button title="SEND" type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
+                                    <Button title={strings('requestRoute.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
+                                    <Button title={strings('requestRoute.send')} type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
                                 </View>
                             </View>
                         </View>

@@ -21,6 +21,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Autocomplete from "react-native-autocomplete-input";
 import Register from "../../../Authentification/Register";
 import ModalWrapper from "react-native-modal-wrapper";
+import {strings} from "../../../translations/translate";
 
 
 export default class addNewStadium extends React.Component{
@@ -87,9 +88,9 @@ export default class addNewStadium extends React.Component{
 
     onChooseImagePress = async () => {
         if (Object.keys(this.state.images).length === 5){
-            Alert.alert("Attention!!", "Maximum of documents to add is 5..");
+            Alert.alert("Attention!!", strings('addNewStadium.error3'));
         }else if (this.state.imageName === ""){
-            Alert.alert("Attention!!", "Please give the image a name before uploading it..");
+            Alert.alert("Attention!!", strings('addNewStadium.error4'));
         }else{
             //let result = await ImagePicker.launchCameraAsync();
             let result = await ImagePicker.launchImageLibraryAsync();
@@ -120,7 +121,7 @@ export default class addNewStadium extends React.Component{
         return ref.put(blob);
     };
     termsAndConditions(){
-        return <View style={{marginLeft: 8}}><Text>I accept all <Text style={{textDecorationLine: 'underline'}} onPress={() => this.props.navigation.navigate('TermsAndConditions')}>Terms & Conditions</Text></Text></View>
+        return <View style={{marginLeft: 8}}><Text>{strings('addNewStadium.accept')}<Text style={{textDecorationLine: 'underline'}} onPress={() => this.props.navigation.navigate('TermsAndConditions')}>{strings('addNewStadium.termsAndConditions')}</Text></Text></View>
     };
     handleDelete = imageUri => {
         const images = this.state.images.filter(image => image.uri !== imageUri);
@@ -141,7 +142,7 @@ export default class addNewStadium extends React.Component{
             }
             else {
                 // your call back function
-                Alert.alert("Attention", "please enter numbers only");
+                Alert.alert("Attention", strings('addNewStadium.error5'));
             }
         }
         this.setState({phoneNumber: newText})
@@ -165,9 +166,9 @@ export default class addNewStadium extends React.Component{
     onAllDone(){
         this.state.user = auth.currentUser;
         if (this.state.stadiumName === ""|| this.state.city === "" || this.state.responsibleName === "" || this.state.phoneNumber === "" || this.state.stadiumAddress === "" || Object.keys(this.state.images).length   === 0){
-            Alert.alert('Attention!!', 'Please fill the required fields.. All the fields are required except: description');
+            Alert.alert('Attention!!', strings('addNewStadium.error1'));
         }else if(!this.state.isChecked){
-            Alert.alert('Please accept our terms and conditions to continue');
+            Alert.alert(strings('addNewStadium.error2'));
         } else {
 
             if ((this.state.Data.FirstName === "") || (this.state.Data.LastName === "") || (this.state.Data.Phone_Number === "") || (!this.state.user.emailVerified)){
@@ -241,7 +242,7 @@ export default class addNewStadium extends React.Component{
                             value={this.state.query}
                             defaultValue={query}
                             onChangeText={text => this.setState({ query: text })}
-                            placeholder="Enter city here"
+                            placeholder={strings('addNewStadium.enterCity')}
                             renderItem={({ item }) => (
                                 <TouchableOpacity onPress={() => {this.setState({ city: item.City, query: '' });this.setModalVisible(false)}}>
                                     <Text style={styles.itemText}>
@@ -252,7 +253,7 @@ export default class addNewStadium extends React.Component{
                         />
                     </View>
                     <View style={styles.cancelModalButton}>
-                        <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.setState({query: '' })}} />
+                        <Button title={strings('addNewStadium.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.setState({query: '' })}} />
                     </View>
                     </View>
                 </ModalWrapper>
@@ -270,7 +271,7 @@ export default class addNewStadium extends React.Component{
                         style={styles.input}
                         value={this.state.stadiumName}
                         maxLength={22}
-                        placeholder="Stadium name"
+                        placeholder={strings('addNewStadium.stadiumName')}
                         underlineColorAndroid = "transparent"
                         placeholderTextColor = "#a9a9a1"
                         autoCapitalize = "none"
@@ -280,7 +281,7 @@ export default class addNewStadium extends React.Component{
                         style={styles.input}
                         value={this.state.responsibleName}
                         maxLength={22}
-                        placeholder="Responsible name"
+                        placeholder={strings('addNewStadium.responsibleName')}
                         underlineColorAndroid = "transparent"
                         placeholderTextColor = "#a9a9a1"
                         autoCapitalize = "none"
@@ -291,52 +292,52 @@ export default class addNewStadium extends React.Component{
                         value={this.state.phoneNumber}
                         maxLength={22}
                         keyboardType={'numeric'}
-                        placeholder="Phone number"
+                        placeholder={strings('addNewStadium.phoneNumber')}
                         underlineColorAndroid = "transparent"
                         placeholderTextColor = "#a9a9a1"
                         autoCapitalize = "none"
                         onChangeText={(value) => { this.handlePhoneNumber(value)}}
                     />
                     <View style={{flexDirection: 'column', marginTop: 10}}>
-                        <Text style={{fontSize: 15}}>Stadium city</Text>
+                        <Text style={{fontSize: 15}}>{strings('addNewStadium.stadiumCity')}</Text>
                         <View style={styles.stadiumAddress}>
                             <View style={{justifyContent: 'center', alignItems: 'center', marginRight: 5}}><Icon name="city" size={16} color="#000" style={{opacity: 0.4}} /></View>
                             <Text style={{opacity: 0.4, width: 245}}> {this.state.city}</Text>
                             <TouchableOpacity style={styles.goChooseButton} onPress={() => {this.setModalVisible(true);}}>
-                                <Text style={styles.goChooseButtonText}>Go choose</Text>
+                                <Text style={styles.goChooseButtonText}>{strings('addNewStadium.goChoose')}</Text>
                             </TouchableOpacity >
                         </View>
                     </View>
                     <View style={{flexDirection: 'column', marginTop: 10}}>
-                        <Text style={{fontSize: 15}}>Stadium address</Text>
+                        <Text style={{fontSize: 15}}>{strings('addNewStadium.stadiumAddress')}</Text>
                         <View style={styles.stadiumAddress}>
                             <View style={{justifyContent: 'center', alignItems: 'center', marginRight: 5}}><Icon name="map-marker-alt" size={20} color="#000" style={{opacity: 0.4}} /></View>
                             <Text style={{opacity: 0.4, width: 245}}> {this.state.stadiumAddress}</Text>
                             <TouchableOpacity style={styles.goChooseButton} onPress={() => this.goChooseStadiumLocation()}>
-                                <Text style={styles.goChooseButtonText}>Go choose</Text>
+                                <Text style={styles.goChooseButtonText}>{strings('addNewStadium.goChoose')}</Text>
                             </TouchableOpacity >
                         </View>
                     </View>
                     <View style={{flexDirection: 'column', marginTop: 10}}>
-                        <Text style={{fontSize: 15}}>Documents (max: 5)</Text>
+                        <Text style={{fontSize: 15}}>{strings('addNewStadium.documents')}</Text>
                         <View style={styles.documents}>
                             <TextInput
                                 style={styles.imageInput}
                                 value={this.state.imageName}
                                 maxLength={22}
-                                placeholder="Image name"
+                                placeholder={strings('addNewStadium.imageName')}
                                 underlineColorAndroid = "transparent"
                                 placeholderTextColor = "#a9a9a1"
                                 autoCapitalize = "none"
                                 onChangeText={(value) => { this.setState({imageName: value})}}
                             />
                             <TouchableOpacity style={styles.goChooseButton} onPress={this.onChooseImagePress}>
-                                <Text style={styles.goChooseButtonText}>Go choose</Text>
+                                <Text style={styles.goChooseButtonText}>{strings('addNewStadium.goChoose')}</Text>
                             </TouchableOpacity >
                         </View>
                         <View>
                             {
-                                Object.keys(this.state.images).length   === 0 ? <View style={{marginTop: 8}}><Text style={{opacity: 0.4}}>No documents uploaded</Text></View>
+                                Object.keys(this.state.images).length   === 0 ? <View style={{marginTop: 8}}><Text style={{opacity: 0.4}}>{strings('addNewStadium.noDocuments')}</Text></View>
                                     :
                                    this.state.images.map((image) => {
                                             return (
@@ -350,11 +351,11 @@ export default class addNewStadium extends React.Component{
                         </View>
                     </View>
                     <View style={styles.textAreaContainer} >
-                        <Text style={{fontSize: 15, marginBottom: 5}}>Description</Text>
+                        <Text style={{fontSize: 15, marginBottom: 5}}>{strings('addNewStadium.description')}</Text>
                         <TextInput
                             style={styles.textArea}
                             underlineColorAndroid="transparent"
-                            placeholder="Any notes? add them here please"
+                            placeholder={strings('addNewStadium.descriptionLabel')}
                             placeholderTextColor="grey"
                             numberOfLines={10}
 
@@ -380,7 +381,7 @@ export default class addNewStadium extends React.Component{
                         rightTextView={this.termsAndConditions()}
                     />
                     <TouchableOpacity style={styles.addNewStadiumButton} onPress={() => this.onAllDone()}>
-                        <Text style={styles.addNewStadiumButtonText}>Done</Text>
+                        <Text style={styles.addNewStadiumButtonText}>{strings('addNewStadium.done')}</Text>
                     </TouchableOpacity >
                 </View>
                         </View>

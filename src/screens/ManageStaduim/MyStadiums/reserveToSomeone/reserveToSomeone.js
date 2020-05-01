@@ -5,6 +5,7 @@ import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import moment from "moment";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import {auth, db, storage} from './../../../../services/FireBaseConfig';
+import {strings} from "../../../../translations/translate";
 
 
 
@@ -123,7 +124,7 @@ export default class reserveToSomeone extends Component {
         return (
             <View>
                 <View>
-                    <Button onPress={showDatepicker} title="Choose The Day" />
+                    <Button onPress={showDatepicker} title={strings('reserveToSomeone.choose')} />
                 </View>
                 {show && (
                     <RNDateTimePicker
@@ -158,7 +159,7 @@ export default class reserveToSomeone extends Component {
         }).then(() => {
             Alert.alert(
                 'Action!!',
-                'Data sent successfully',
+                strings('reserveToSomeone.dataSent'),
                 [
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                 ],
@@ -173,7 +174,7 @@ export default class reserveToSomeone extends Component {
         }).then(() => {
             Alert.alert(
                 'Action!!',
-                'Data sent successfully',
+                strings('reserveToSomeone.dataSent'),
                 [
                     {text: 'OK', onPress: () => console.log('OK Pressed')},
                 ],
@@ -214,11 +215,11 @@ export default class reserveToSomeone extends Component {
                                             {
                                                 Program.reserved ?
                                                     <TouchableOpacity style={styles.buttonReserved} onPress={() => this.onReserveV2(Program.id)}>
-                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5, color: '#fff'}}>Reserved</Text>
+                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5, color: '#fff'}}>{strings('reserveToSomeone.reserved')}</Text>
                                                     </TouchableOpacity>
                                                     :
                                                     <TouchableOpacity style={styles.buttonReserve} onPress={() => this.onReserveV2(Program.id)}>
-                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>Reserve</Text>
+                                                        <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>{strings('reserveToSomeone.reserve')}</Text>
                                                     </TouchableOpacity>
                                             }
                                         </View>
@@ -242,11 +243,11 @@ export default class reserveToSomeone extends Component {
                                                 {
                                                     Program.reserved ?
                                                         <TouchableOpacity style={styles.buttonReserved} onPress={() => this.onReserveV1(Program.id)}>
-                                                            <Text style={{textAlign: 'center', fontSize:20, marginTop: 5, color: '#fff'}}>Reserved</Text>
+                                                            <Text style={{textAlign: 'center', fontSize:20, marginTop: 5, color: '#fff'}}>{strings('reserveToSomeone.reserved')}</Text>
                                                         </TouchableOpacity>
                                                         :
                                                         <TouchableOpacity style={styles.buttonReserve} onPress={() => this.onReserveV1(Program.id)}>
-                                                            <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>Reserve</Text>
+                                                            <Text style={{textAlign: 'center', fontSize:20, marginTop: 5}}>{strings('reserveToSomeone.reserve')}</Text>
                                                         </TouchableOpacity>
                                                 }
                                             </View>
@@ -259,11 +260,11 @@ export default class reserveToSomeone extends Component {
                     {
                         this.state.newProgram.length > 0 && !this.state.isLoading ?
                             <TouchableOpacity style={styles.doneButton} onPress={() => this.onFinishV2()}>
-                                <Text style={styles.doneButtonText}>Finish</Text>
+                                <Text style={styles.doneButtonText}>{strings('reserveToSomeone.finish')}</Text>
                             </TouchableOpacity > :
                             this.state.Program.length > 0 && !this.state.isLoading ?
                                 <TouchableOpacity style={styles.doneButton} onPress={() => this.onFinishV1()}>
-                                    <Text style={styles.doneButtonText}>Finish</Text>
+                                    <Text style={styles.doneButtonText}>{strings('reserveToSomeone.finish')}</Text>
                                 </TouchableOpacity > :
                                 <View></View>
                     }

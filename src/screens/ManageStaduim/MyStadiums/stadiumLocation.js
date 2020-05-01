@@ -7,6 +7,7 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import Path from '../../Subscriptions/Path'
 import {Spinner} from "native-base";
 import Constants from 'expo-constants';
+import {strings} from "../../../translations/translate";
 
 export default class stadiumLocation extends React.Component{
     state = {
@@ -117,7 +118,7 @@ export default class stadiumLocation extends React.Component{
                     coordinate={{latitude: this.state.destinationinfo.lat, longitude: this.state.destinationinfo.lng}}
                 >
                     <Callout>
-                        <Text>Stadium location</Text>
+                        <Text>{strings('stadiumLocation.stadiumLocation')}</Text>
                     </Callout>
                 </Marker>
             )
@@ -158,7 +159,7 @@ export default class stadiumLocation extends React.Component{
             this.props.navigation.navigate('addNewStadium', {data2:this.state.destinationinfo});
             console.log(this.state.destinationinfo);
         }else {
-            Alert.alert('Attention!','Choose the location first');
+            Alert.alert('Attention!', strings('stadiumLocation.chooseLocationFirst'));
         }
     };
 
@@ -222,7 +223,7 @@ export default class stadiumLocation extends React.Component{
                 </MapView>
                 {this.searchInterface()}
                 <TouchableOpacity style={styles.nextButton} onPress={() => this.goNext()}>
-                    <Text style={styles.nextButtonText}>Next</Text>
+                    <Text style={styles.nextButtonText}>{strings('stadiumLocation.next')}</Text>
                 </TouchableOpacity >
             </View>
         );

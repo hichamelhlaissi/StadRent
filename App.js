@@ -15,58 +15,62 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
 
- export async function registerForPushNotificationsAsync() {
-     if (Constants.isDevice) {
-         const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-         let finalStatus = existingStatus;
-         if (existingStatus !== 'granted') {
-             const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-             finalStatus = status;
-         }
-         if (finalStatus !== 'granted') {
-             alert('Failed to get push token for push notification!');
-             return;
-         }
+export async function registerForPushNotificationsAsync() {
+    if (Constants.isDevice) {
+        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
 
-         const token = await Notifications.getExpoPushTokenAsync();
-         console.log(token);
-         if (auth.currentUser !== null){
-             let userCon = auth.currentUser.uid;
-             let ref = db.ref("/users");
-             let keytable;
-             let queryKey = ref.orderByChild("uid").equalTo(userCon);
-             await queryKey.once("value", function (snapshot) {
-                 snapshot.forEach(function (child) {
-                     keytable = child.key
-                 });
+        const token = await Notifications.getExpoPushTokenAsync();
+        if (auth.currentUser !== null){
+            let userCon = auth.currentUser.uid;
+            let ref = db.ref("/users");
+            let keytable;
+            let queryKey = ref.orderByChild("uid").equalTo(userCon);
+            await queryKey.once("value", function (snapshot) {
+                snapshot.forEach(function (child) {
+                    keytable = child.key
+                });
 
-             }).then(async function (data) {
-                 let updates = {};
-                 updates['/notificationToken'] = token;
-                 await db.ref('/users/'+keytable).update(updates);
-             });
+            }).then(async function (data) {
+                // let updates = {};
+                // updates['/notificationToken'] = token;
+                console.log('wa rah dkhlt');
+                await db.ref('/users/'+keytable).update({
+                    notificationToken:  token
+                });
+            });
 
-         }
 
-         this.setState({ expoPushToken: token });
-     } else {
-         alert('Must use physical device for Push Notifications');
-     }
+        }
 
-     if (Platform.OS === 'android') {
-         Notifications.createChannelAndroidAsync('default', {
-             name: 'default',
-             sound: true,
-             priority: 'max',
-             vibrate: [0, 250, 250, 250],
-         });
-     }
+        this.setState({ expoPushToken: token });
+    } else {
+        alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+        Notifications.createChannelAndroidAsync('default', {
+            name: 'default',
+            sound: true,
+            priority: 'max',
+            vibrate: [0, 250, 250, 250],
+        });
+    }
 }
 
 export const _handleNotification = notification => {
     Vibration.vibrate();
     console.log(notification);
-    this.setState({ notification: notification });
+    //
+    //this.setState({ notification: notification });
 };
 
 export default class App extends React.Component{

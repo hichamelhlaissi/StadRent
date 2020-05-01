@@ -5,6 +5,7 @@ import {APPROX_STATUSBAR_HEIGHT} from "react-native-paper/src/constants";
 import HistoryRoute from "./HistoryRoute";
 import RequestRoute from "./RequestRoute";
 import ScheduledRoute from "./ScheduledRoute";
+import {strings} from '../../../../src/translations/translate';
 
 
 const initialLayout = {
@@ -20,9 +21,9 @@ export default class Schedule extends React.Component {
     state = {
         index: 0,
         routes: [
-            { key: 'history', title: 'History' },
-            { key: 'scheduled', title: 'Scheduled' },
-            { key: 'request', title: 'Request' },
+            { key: 'history', title: strings('schedule.history') },
+            { key: 'scheduled', title: strings('schedule.scheduled') },
+            { key: 'request', title: strings('schedule.request') },
         ],
     };
 
