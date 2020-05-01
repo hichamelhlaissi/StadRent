@@ -7,44 +7,45 @@ import TermsAndConditions from "../screens/ManageStaduim/MyStadiums/TermsAndCond
 import stadiumLocation from '../screens/ManageStaduim/MyStadiums/stadiumLocation';
 import stadiumProgram from "../screens/ManageStaduim/MyStadiums/nextWeekProgram/stadiumProgram";
 import reserveToSomeone from "../screens/ManageStaduim/MyStadiums/reserveToSomeone/reserveToSomeone";
+import {strings} from '../translations/translate';
 
 const screens = {
     MyStaduim:{
         screen: MyStaduims,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='My Staduims'/>,
+                headerTitle: () => <Header navigation={navigation} title={strings('myStadiums.pageTitle1')}/>,
             }
         }
     },
     addNewStadium: {
         screen: addNewStadium,
         navigationOptions: {
-            title: 'Add a new stadium',
+            title: strings('myStadiums.pageTitle2'),
         }
     },
     TermsAndConditions: {
         screen: TermsAndConditions,
         navigationOptions: {
-            title: 'Terms & Conditions',
+            title: strings('myStadiums.pageTitle3'),
         }
     },
     stadiumLocation: {
         screen: stadiumLocation,
         navigationOptions: {
-            title: 'Stadium location',
+            title: strings('myStadiums.pageTitle4'),
         }
     },
     stadiumProgram: {
         screen: stadiumProgram,
         navigationOptions: {
-            title: 'Stadium Program',
+            title: strings('myStadiums.pageTitle5'),
         }
     },
     reserveToSomeone: {
         screen: reserveToSomeone,
         navigationOptions: {
-            title: 'Reserve To Someone',
+            title: strings('myStadiums.pageTitle6'),
         }
     },
 
