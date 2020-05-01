@@ -3,6 +3,9 @@ import {Alert, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, Toucha
 import Icon from 'react-native-vector-icons/Entypo';
 import {auth, db, storage} from './../../../services/FireBaseConfig';
 import {strings} from "../../../translations/translate";
+import {registerForPushNotificationsAsync, _handleNotification} from "../../../../App";
+import {Notifications} from "expo";
+
 
 
 export default class MyStaduims extends React.Component{
@@ -32,6 +35,10 @@ export default class MyStaduims extends React.Component{
 };
 
     componentDidMount() {
+        //notification config Sta
+        registerForPushNotificationsAsync();
+        this._notificationSubscription = Notifications.addListener(_handleNotification);
+        //notification config End
         const { navigation } = this.props;
         this.focusListener = navigation.addListener('didFocus', () => {
             this.setState({ isLoading: true, stadiums: [] });

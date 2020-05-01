@@ -7,14 +7,14 @@ import React from 'react';
 import MyStaduims from "../screens/ManageStaduim/MyStadiums/MyStaduims";
 import Header from "../shared/header";
 import Home from "../screens/Home";
-
+import {strings} from '../translations/translate';
 const screens = {
 
     Login:{
         screen: Login,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <HeaderNone navigation={navigation} title='Login'/>,
+                headerTitle: () => <HeaderNone navigation={navigation} title={strings('loginPage.pageTitle')}/>,
                 header: null,
                 drawerLockMode: 'locked-closed',
             }
@@ -24,7 +24,7 @@ const screens = {
         screen: Register,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <HeaderNone navigation={navigation} title='Register'/>,
+                headerTitle: () => <HeaderNone navigation={navigation} title={strings('registerPage.pageTitle')}/>,
                 drawerLockMode: 'locked-closed',
             }
         }
@@ -33,7 +33,7 @@ const screens = {
         screen: MyStaduims,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='My Staduims'/>,
+                headerTitle: () => <Header navigation={navigation} title={strings('registerPage.myStaduims')}/>,
                 headerLeft: null
             }
         }
@@ -42,7 +42,7 @@ const screens = {
         screen: Home,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <Header navigation={navigation} title='Home'/>,
+                headerTitle: () => <Header navigation={navigation} title={strings('homePage.pageTitle')}/>,
                 headerLeft: null
             }
         }

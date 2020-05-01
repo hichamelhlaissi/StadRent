@@ -47,8 +47,6 @@ export async function registerForPushNotificationsAsync() {
                     notificationToken:  token
                 });
             });
-
-
         }
 
         this.setState({ expoPushToken: token });
@@ -123,8 +121,8 @@ export default class App extends React.Component{
     }
     loginUser = (email, password, props, Change=()=>this.getNavigator()) => {
         props = this.props;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(function (user) {
+        auth.signInWithEmailAndPassword(email, password)
+            .then(function (user) {
                 Change();
             }).catch(error => this.setState({ error: error.message }))
     };
@@ -132,7 +130,7 @@ export default class App extends React.Component{
     getNavigator=  (Change=()=>this.setState({Data:'userResponsible',isLoading: false}), Change2=()=>this.setState({Data:'userNormal',isLoading: false}),
                     Change3=()=>this.setState({isLoading: false}),
                     Change4=()=>this.setState({isLoading: false, error: 'There is no user record corresponding to this identifier. The user may have been deleted.'}),
-                    )=> {
+    )=> {
         setTimeout(function(){
             if (auth.currentUser === null){
                 Change3();
@@ -140,7 +138,7 @@ export default class App extends React.Component{
                 let userCon = auth.currentUser.uid;
                 let ref = db.ref("/users");
                 let query = ref.orderByChild("uid").equalTo(userCon);
-                 query.once("value", function (snapshot) {
+                query.once("value", function (snapshot) {
                     snapshot.forEach(function (child) {
                         console.log(child.val().userType);
                         if (child.val().userType === 'userResponsible') {

@@ -7,6 +7,7 @@ import {auth, db} from "../../services/FireBaseConfig";
 import ShowOnMap from "./ShowOnMap";
 import {FontAwesome} from '@expo/vector-icons';
 import {GetDataNotification, SendNotification} from "../ManageStaduim/Schedule/RequestRoute";
+import {strings} from "../../translations/translate";
 
 export const IsOrderValid=()=>{
     let getDay = new Date().getDate();
@@ -16,7 +17,6 @@ export const IsOrderValid=()=>{
     let FullDate = getDay+'/'+getMonth+'/'+getFullYear;
     let ref = db.ref("/orders");
     let query = ref.orderByKey();
-    console.log('Function Is Set');
     query.once("value", function (snapshot) {
         snapshot.forEach(function (child) {
             if (child.val().Status === "Pending"){
@@ -24,25 +24,25 @@ export const IsOrderValid=()=>{
                 if ((child.val().rentYear === getFullYear) && (child.val().rentMonth === getMonth) && (child.val().rentDay === getDay) && (child.val().StartHour <= getHours)){
                     db.ref("/orders/" + child.key).update({
                         Status: 'Canceled',
-                        Canceled: 'System : Over Time',
+                        Canceled: strings('ordersUserPages.systemOverTime'),
                     }).then(r  => GetDataNotification(child.key));
                 }
                 if ((child.val().rentYear === getFullYear) && (child.val().rentMonth === getMonth) && (child.val().rentDay < getDay)){
                     db.ref("/orders/"+child.key).update({
                         Status: 'Canceled',
-                        Canceled: 'System : Over Time',
+                        Canceled: strings('ordersUserPages.systemOverTime'),
                     }).then(r  => GetDataNotification(child.key));
                 }
                     if ((child.val().rentYear === getFullYear) && (child.val().rentMonth < getMonth)){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Over Time',
+                            Canceled: strings('ordersUserPages.systemOverTime'),
                         }).then(r  => GetDataNotification(child.key));
                         }
                 if (child.val().rentYear < getFullYear){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Over Time',
+                            Canceled: strings('ordersUserPages.systemOverTime'),
                         }).then(r  => GetDataNotification(child.key));
                 }
             }
@@ -58,7 +58,6 @@ export const IsOrderDone=()=>{
     let FullDate = getDay+'/'+getMonth+'/'+getFullYear;
     let ref = db.ref("/orders");
     let query = ref.orderByKey();
-    console.log('Function Is Set');
     query.once("value", function (snapshot) {
         snapshot.forEach(function (child) {
             if (child.val().Status === "Accepted"){
@@ -66,25 +65,25 @@ export const IsOrderDone=()=>{
                     if ((child.val().rentYear === getFullYear) && (child.val().rentMonth === getMonth) && (child.val().rentDay === getDay) && (child.val().StartHour <= getHours)){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Delivered',
+                            Canceled: strings('ordersUserPages.systemDelivered'),
                         }).then(r  => GetDataNotification(child.key));
                     }
                     if ((child.val().rentYear === getFullYear) && (child.val().rentMonth === getMonth) && (child.val().rentDay < getDay)){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Delivered',
+                            Canceled: strings('ordersUserPages.systemDelivered'),
                         }).then(r  => GetDataNotification(child.key));
                     }
                     if ((child.val().rentYear === getFullYear) && (child.val().rentMonth < getMonth)){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Delivered',
+                            Canceled: strings('ordersUserPages.systemDelivered'),
                         }).then(r  => GetDataNotification(child.key));
                     }
                     if (child.val().rentYear < getFullYear){
                         db.ref("/orders/"+child.key).update({
                             Status: 'Canceled',
-                            Canceled: 'System : Delivered',
+                            Canceled: strings('ordersUserPages.systemDelivered'),
                         }).then(r  => GetDataNotification(child.key));
                     }
 
@@ -130,7 +129,7 @@ export default class RequestRoute extends Component {
                      Canceled: message,
                  }, function (error) {
                      if (error) {
-                         Alert.alert('Error', error)
+                         Alert.alert(strings('ordersUserPages.error'), error);
                      } else {
                          console.log('success');
                      }
@@ -140,9 +139,9 @@ export default class RequestRoute extends Component {
 
             this.getRequestOrders();
 
-            Alert.alert('Message cancellation sent successfully!!','Your cancellation message is: '+message);
+            Alert.alert(strings('ordersUserPages.cancellationMessage'),strings('ordersUserPages.yourMessage')+message);
         }else {
-            Alert.alert('Erreur!!','Your cancellation message is empty');
+            Alert.alert(strings('ordersUserPages.error'),strings('ordersUserPages.emptyMessage'));
         }
     }
     onRefresh() {
@@ -182,7 +181,7 @@ export default class RequestRoute extends Component {
                     Deleted:'false',
                 }, function (error) {
                     if (error) {
-                        Alert.alert('Error!!', error);
+                        Alert.alert(strings('ordersUserPages.error'), error);
                     } else {
                         console.log('success');
                     }
@@ -202,7 +201,7 @@ export default class RequestRoute extends Component {
             });
         }).then( r =>{
             if (check){
-                return Alert.alert('Error!!', 'Already Exist');
+                return Alert.alert(strings('ordersUserPages.error'), strings('ordersUserPages.exist'));
             }
             if (!check){
                 db.ref('/favoriteStaduim').push({
@@ -213,7 +212,7 @@ export default class RequestRoute extends Component {
                     Deleted:'false',
                 }, function (error) {
                     if (error) {
-                        Alert.alert('Error!!', error);
+                        Alert.alert(strings('ordersUserPages.error'), error);
                     } else {
                         console.log('success');
                     }
@@ -261,18 +260,18 @@ export default class RequestRoute extends Component {
                             this.setState({Sender: IdStaduim})
                         }}>
                             <Text style={styles.buttonsText}><Icon name="map-marker-alt" size={15}
-                                                                   color="#EAE114"/> Show on map</Text>
+                                                                   color="#EAE114"/> {strings('ordersUserPages.showOnMap')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[styles.buttons, {marginTop: 12}]}
                                           onPress={() => this.addToFavorite(IdStaduim, stadiumName, IdResponsible)}>
                             <Text
-                                style={styles.buttonsText}> Add to favorite</Text>
+                                style={styles.buttonsText}> {strings('ordersUserPages.addFavorite')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[styles.buttons, {marginTop: 12}]} onPress={() => {
                             this.setModalVisible(true);
                             this.setState({Cancel: IdOrders})
                         }}>
-                            <Text style={styles.buttonsText}>Cancel</Text>
+                            <Text style={styles.buttonsText}>{strings('ordersUserPages.cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -319,7 +318,7 @@ export default class RequestRoute extends Component {
                                     </View>
                                 )
                             })
-                            : <View style={styles.noOrders}><Text>Request orders is empty</Text></View>
+                            : <View style={styles.noOrders}><Text>{strings('ordersUserPages.emptyOrders')}</Text></View>
                 }
                 <ModalWrapper
                     animationType="slide"
@@ -333,7 +332,7 @@ export default class RequestRoute extends Component {
                                 <TextInput
                                     style={styles.textArea}
                                     underlineColorAndroid="transparent"
-                                    placeholder="Enter your cancellation reason"
+                                    placeholder={strings('ordersUserPages.cancelReason')}
                                     placeholderTextColor="grey"
                                     numberOfLines={10}
                                     multiline={true}
@@ -347,8 +346,8 @@ export default class RequestRoute extends Component {
                             </View>
                             <View style={styles.cancelButtons}>
 
-                                <Button title="CANCEL" type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
-                                <Button title="SEND" type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
+                                <Button title={strings('ordersUserPages.cancel')} type="regular" onPress={() => {this.setModalVisible(!this.state.modalVisible);}} />
+                                <Button title={strings('ordersUserPages.send')} type="primary" onPress={() => {this.setModalVisible(!this.state.modalVisible);this.cancelOrder(this.state.messageCancellation)}} />
                             </View>
                         </View>
                     </View>

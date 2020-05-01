@@ -11,7 +11,7 @@ import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Button} from 
 import {Container, Header, Body, Content} from 'native-base';
 import {auth, db} from '../services/FireBaseConfig';
 import { Updates } from 'expo';
-
+import {strings} from '../translations/translate';
 
 const RootDrawerNavigator = createDrawerNavigator({
     Home: {
@@ -45,12 +45,12 @@ const RootDrawerNavigator = createDrawerNavigator({
             <Content style={{backgroundColor: '#ffffff'}}>
                     <DrawerItems {...props} />
                 <Button
-                    title="Sign out"
+                    title={strings('drawerUserPage.signOut')}
                     onPress={() =>{
                         auth.signOut().then(function() {
                             Updates.reload()
                         }).catch(function(error) {
-                            alert('error : ', error)
+                            alert(strings('drawerUserPage.error'), error.message)
                         });
                     }}
                 />
