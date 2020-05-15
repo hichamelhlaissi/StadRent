@@ -26,6 +26,7 @@ export default class stadiumLocation extends React.Component{
     constructor(props) {
         super(props);
         const {state} = props.navigation;
+
         // N’appelez pas `this.setState()` ici !
         if (Platform.OS === 'android' && !Constants.isDevice || Platform.OS === 'ios' && !Constants.isDevice) {
             this.setState({
@@ -57,8 +58,13 @@ export default class stadiumLocation extends React.Component{
             latitudeDelta: 0.09,
             longitudeDelta: 0.035,
         };
+        let markerCords ={
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+        };
         this.setState({
             initialPosition,
+            markerCords,
             locationpermission:true,
             departinfo:{
                 lat: location.coords.latitude,
@@ -112,10 +118,14 @@ export default class stadiumLocation extends React.Component{
     };
     destinationmarker=()=>{
         if(Object.keys(this.state.destinationinfo).length   != 0){
+            let lat =this.state.destinationinfo.lat;
+            let log = this.state.destinationinfo.lng;
             return (
                 <Marker
                     pinColor={'rgb(255,4,0)'}
                     coordinate={{latitude: this.state.destinationinfo.lat, longitude: this.state.destinationinfo.lng}}
+                    draggable
+                    onDragEnd={event => console.log(event)}
                 >
                     <Callout>
                         <Text>{strings('stadiumLocation.stadiumLocation')}</Text>
@@ -156,10 +166,15 @@ export default class stadiumLocation extends React.Component{
     };
     goNext=()=>{
         if (Object.keys(this.state.destinationinfo).length   !== 0){
+
             this.props.navigation.navigate('addNewStadium', {data2:this.state.destinationinfo});
             console.log(this.state.destinationinfo);
         }else {
-            Alert.alert('Attention!', strings('stadiumLocation.chooseLocationFirst'));
+            // Alert.alert('Attention!', strings('stadiumLocation.chooseLocationFirst'));
+            this.props.navigation.navigate('addNewStadium', {data2:{
+                    lat:this.state.markerCords.latitude,
+                    lng:this.state.markerCords.longitude
+                }});
         }
     };
 
@@ -168,6 +183,14 @@ export default class stadiumLocation extends React.Component{
 
 
     render() {
+        let lat= 1;
+        let log = 1;
+        if (this.state.markerCords !== undefined)
+        {
+             lat =this.state.markerCords.latitude;
+             log = this.state.markerCords.longitude;
+
+        }
 
         return (
             <View style={styles.container}>
@@ -177,51 +200,21 @@ export default class stadiumLocation extends React.Component{
                          showsUserLocation={true}
                          initialRegion={this.state.initialPosition}
                 >
-                    <MapView.Circle
-                        center={this.state.LatLng}
-                        radius={2000}
-                        fillColor={'rgba(255,157,245,0.5)'}
-                    />
+                    <Marker
+                        pinColor={'rgb(255,4,0)'}
+                        coordinate={{latitude: lat, longitude: log}}
+                        draggable
+                        onDragEnd={event =>this.setState({destinationinfo:{
+                                lat:event.nativeEvent.coordinate.latitude,
+                                lng:event.nativeEvent.coordinate.longitude
+                            }})   }
+                    >
+                        <Callout>
+                            <Text>{strings('stadiumLocation.stadiumLocation')}</Text>
+                        </Callout>
+                    </Marker>
 
-                    {/* {
-                        this.state.coordinates.map((marker, index) => (
-                            <Marker
-                                key={marker.name}
-                                ref={ref => this.state.markers[index] = ref}
-                                onPress={() => this.onMarkerPressed(marker, index)}
-                                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                               // icon={require('../../assets/Images/taxi.png')}
-                            >
-                                <Callout>
-                                    <Text>{marker.name}</Text>
-                                </Callout>
-                            </Marker>
-                        ))
-                    } */}
-
-                    {/*{this.departmarker()}*/}
-                    {this.destinationmarker()}
-                    {/*{*/}
-                    {/*    this.state.pathsShowing ? <Polyline*/}
-                    {/*        coordinates={[*/}
-                    {/*            { latitude:  this.state.departinfo.lat, longitude: this.state.departinfo.lng },*/}
-                    {/*            { latitude:  this.state.destinationinfo.lat, longitude: this.state.destinationinfo.lng }*/}
-                    {/*        ]}*/}
-                    {/*        strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider*/}
-                    {/*        strokeColors={[*/}
-                    {/*            '#7F0000',*/}
-                    {/*            '#00000000', // no color, creates a "long" gradient between the previous and next coordinate*/}
-                    {/*            '#B24112',*/}
-                    {/*            '#E5845C',*/}
-                    {/*            '#238C23',*/}
-                    {/*            '#7F0000'*/}
-                    {/*        ]}*/}
-                    {/*        strokeWidth={6}*/}
-                    {/*    />*/}
-                    {/*    : <View></View>*/}
-                    {/*}*/}
                 </MapView>
-                {this.searchInterface()}
                 <TouchableOpacity style={styles.nextButton} onPress={() => this.goNext()}>
                     <Text style={styles.nextButtonText}>{strings('stadiumLocation.next')}</Text>
                 </TouchableOpacity >
@@ -234,12 +227,15 @@ const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        flex: 1
     },
     map: {
         ...StyleSheet.absoluteFillObject
     },
     nextButton: {
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        bottom: 0,
         backgroundColor: "#5780D9",
         paddingLeft: 12,
         paddingRight: 12,

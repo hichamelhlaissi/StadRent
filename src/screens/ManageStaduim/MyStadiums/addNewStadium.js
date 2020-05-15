@@ -117,7 +117,7 @@ export default class addNewStadium extends React.Component{
         const response = await fetch(uri);
         const blob = await response.blob();
 
-        var ref = storage.ref().child("images/" + imageName);
+        var ref = storage.ref().child("images/"+ auth.currentUser.uid + "/" + this.state.stadiumName + "/" + imageName);
         return ref.put(blob);
     };
     termsAndConditions(){
@@ -132,6 +132,9 @@ export default class addNewStadium extends React.Component{
     };
     handleResponsibleName(value){
         this.setState({responsibleName: value})
+    };
+    handleStadiumAddress(value){
+        this.setState({stadiumAddress: value})
     };
     handlePhoneNumber(value){
         let newText = '';
@@ -148,7 +151,11 @@ export default class addNewStadium extends React.Component{
         this.setState({phoneNumber: newText})
     };
     goChooseStadiumLocation(){
-        this.props.navigation.navigate('stadiumLocation');
+        if (this.state.city === '') {
+            Alert.alert("Attention", strings('addNewStadium.error6'));
+        } else {
+            this.props.navigation.navigate('stadiumLocation');
+        }
     };
     GetUserData =(dataUser,isEmailVerified, Change=()=>this.setState({Data:dataUser,isLoading:false}))=>{
         this.state.user = auth.currentUser;
@@ -178,7 +185,7 @@ export default class addNewStadium extends React.Component{
                 this.state.isLoading = true;
                 for (let image of this.state.images){
                     this.uploadImage(image.uri, image.name);
-                    this.state.imagesDb.push({file: image.name+auth.currentUser.uid});
+                    this.state.imagesDb.push({file: image.name});
                 }
                 db.ref('/stadiums').push({
                     uid: auth.currentUser.uid,
@@ -206,18 +213,19 @@ export default class addNewStadium extends React.Component{
         let citiesKeys = Object.keys(this.state.cities);
         if (this.props.navigation.getParam('data2') !== undefined){
             let data2 = this.props.navigation.getParam('data2');
+            console.log(data2.lng,data2.lat);
             this.state.longitude = data2.lng;
             this.state.latitude = data2.lat;
-            //this.state.test = data2;
-            Geocoder.init("AIzaSyCoIzI4JvkT0MjvaBXH-OSt6d6pYuU1dMg");
-            Geocoder.from(data2.lat, data2.lng).then(json => {
-                this.state.street_number = json.results[0].address_components[0].long_name;
-                this.state.route = json.results[0].address_components[1].long_name;
-                this.state.subLocality = json.results[0].address_components[2].long_name;
-                this.state.locality = json.results[0].address_components[3].long_name;
-                this.setState({stadiumAddress: this.state.street_number+", "+this.state.route+", "+this.state.subLocality+", "+this.state.locality});
-
-            });
+            // //this.state.test = data2;
+            // Geocoder.init("AIzaSyCoIzI4JvkT0MjvaBXH-OSt6d6pYuU1dMg");
+            // Geocoder.from(data2.lat, data2.lng).then(json => {
+            //     this.state.street_number = json.results[0].address_components[0].long_name;
+            //     this.state.route = json.results[0].address_components[1].long_name;
+            //     this.state.subLocality = json.results[0].address_components[2].long_name;
+            //     this.state.locality = json.results[0].address_components[3].long_name;
+            //     this.setState({stadiumAddress: this.state.street_number+", "+this.state.route+", "+this.state.subLocality+", "+this.state.locality});
+            //
+            // });
         }
         const { query } = this.state;
         const cities = this.findCity(query);
@@ -300,7 +308,7 @@ export default class addNewStadium extends React.Component{
                     />
                     <View style={{flexDirection: 'column', marginTop: 10}}>
                         <Text style={{fontSize: 15}}>{strings('addNewStadium.stadiumCity')}</Text>
-                        <View style={styles.stadiumAddress}>
+                        <View style={styles.stadiumCity}>
                             <View style={{justifyContent: 'center', alignItems: 'center', marginRight: 5}}><Icon name="city" size={16} color="#000" style={{opacity: 0.4}} /></View>
                             <Text style={{opacity: 0.4, width: 245}}> {this.state.city}</Text>
                             <TouchableOpacity style={styles.goChooseButton} onPress={() => {this.setModalVisible(true);}}>
@@ -308,16 +316,31 @@ export default class addNewStadium extends React.Component{
                             </TouchableOpacity >
                         </View>
                     </View>
+
+
                     <View style={{flexDirection: 'column', marginTop: 10}}>
                         <Text style={{fontSize: 15}}>{strings('addNewStadium.stadiumAddress')}</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={this.state.stadiumAddress}
+                                maxLength={100}
+                                placeholder={strings('addNewStadium.stadiumAddress')}
+                                underlineColorAndroid = "transparent"
+                                placeholderTextColor = "#a9a9a1"
+                                autoCapitalize = "none"
+                                onChangeText={(value) => { this.handleStadiumAddress(value)}}
+                            />
                         <View style={styles.stadiumAddress}>
-                            <View style={{justifyContent: 'center', alignItems: 'center', marginRight: 5}}><Icon name="map-marker-alt" size={20} color="#000" style={{opacity: 0.4}} /></View>
-                            <Text style={{opacity: 0.4, width: 245}}> {this.state.stadiumAddress}</Text>
-                            <TouchableOpacity style={styles.goChooseButton} onPress={() => this.goChooseStadiumLocation()}>
-                                <Text style={styles.goChooseButtonText}>{strings('addNewStadium.goChoose')}</Text>
+                            <View style={{justifyContent: 'center', alignItems: 'center', marginRight: 5}}>
+                                <Icon name="map-marker-alt" size={20} color="#000" style={{opacity: 0.4}} />
+                            </View>
+                            <TouchableOpacity onPress={() => this.goChooseStadiumLocation()}>
+                                <Text style={styles.goCheckAddressPlace}>{strings('addNewStadium.goCheckAddressPlace')}</Text>
                             </TouchableOpacity >
                         </View>
                     </View>
+
+
                     <View style={{flexDirection: 'column', marginTop: 10}}>
                         <Text style={{fontSize: 15}}>{strings('addNewStadium.documents')}</Text>
                         <View style={styles.documents}>
@@ -428,6 +451,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 8,
+        width: '47%',
+    },
+    stadiumCity: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 8,
         width: '95%',
         alignSelf: 'center',
     },
@@ -436,6 +465,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         alignSelf: 'center',
+    },
+    goCheckAddressPlace: {
+        textDecorationLine: 'underline',
+        fontSize: 13,
+        opacity: 0.8
     },
     goChooseButton: {
         borderRadius: 30/2,

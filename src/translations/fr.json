@@ -219,6 +219,7 @@
     "stadiumAddress": "Adresse du stade",
     "documents": "Documents (max: 5)",
     "goChoose": "Allez choisir",
+    "goCheckAddressPlace": "Allez choisir l'emplacement du stade",
     "imageName": "Nom d'image",
     "noDocuments": "Aucun document téléchargé",
     "description": "Description",
@@ -231,6 +232,7 @@
     "error3": "Le maximum de documents à ajouter est de 5 ..",
     "error4": "Merci de donner un nom à l'image avant de la télécharger..",
     "error5": "Merci d'entrer uniquement des nombres",
+    "error6": "Veuillez d'abord choisir la ville",
     "enterCity": "Entrer la ville ici",
     "cancel": "Annuler"
   },

@@ -219,6 +219,7 @@
     "stadiumAddress": "Stadium address",
     "documents": "Documents (max: 5)",
     "goChoose": "Go choose",
+    "goCheckAddressPlace": "Go check address place",
     "imageName": "Image name",
     "noDocuments": "No documents uploaded",
     "description": "Description",
@@ -231,6 +232,7 @@
     "error3": "Maximum of documents to add is 5..",
     "error4": "Please give the image a name before uploading it..",
     "error5": "Please enter numbers only",
+    "error6": "Please choose city first",
     "enterCity": "Enter city here",
     "cancel": "Cancel"
   },
